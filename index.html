@@ -1,70 +1,598 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AI Lucky Hub - Premium Numerology Analytics</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#B3001B">
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Noto+Sans+Thai:wght@300;400;600&family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- CSS Style -->
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+<!DOCTYPE html><html lang="th"><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QA KPI Dashboard</title><link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script><style>html:not(.auth-ready) body{visibility:hidden!important} .auth-screen{position:fixed;inset:0;z-index:9999;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:18px}.auth-box{width:min(420px,100%);padding:30px;border-radius:18px;background:white;box-shadow:0 18px 65px #18263b22}.auth-box h2{margin:0 0 6px;font-size:24px;color:#1f2937}.auth-box p{font-size:13px;color:#64748b}.auth-box label{display:block;margin:14px 0 5px;color:#475569;font-size:13px}.auth-box input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px}.auth-box button{width:100%;padding:12px;margin-top:17px;background:#1f2937;color:white;border:0;border-radius:9px;cursor:pointer}.auth-box button:disabled{opacity:.5}.auth-error{color:#dc2626!important;min-height:18px}.auth-logout{position:absolute;bottom:18px;left:12px;width:calc(100% - 24px);border:1px solid #64748b;background:transparent;color:white;padding:12px;border-radius:10px;cursor:pointer}.auth-dialog{position:fixed;inset:0;z-index:10000;background:#0f172a88;display:flex;align-items:center;justify-content:center}.auth-dialog>div{background:white;padding:25px;border-radius:14px;max-width:350px;width:90%}.auth-dialog button{padding:10px 16px;border-radius:8px;border:0;cursor:pointer}.auth-dialog .yes{background:#b91c1c;color:white}@media(max-width:700px){.auth-logout{position:static;width:auto;white-space:nowrap;padding:9px}} 
+/* New members: negative values appear as a red alert strip with an exclamation icon. */
+.nm-table td.nm-negative-alert{
+  background:#fff0f1!important;
+  color:#d21e32!important;
+  box-shadow:inset 4px 0 0 #ef233c;
+  font-weight:750;
+  white-space:nowrap;
+}
+.nm-negative-alert .nm-alert-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:17px;height:17px;margin-right:6px;
+  border:1.8px solid #ef233c;border-radius:50%;
+  color:#ef233c;font-size:11px;line-height:1;font-weight:800;
+  vertical-align:middle;
+}
+.nm-negative-alert span:last-child{vertical-align:middle;}
 
-  <div id="app-container">
-    
-    <!-- Top Bar -->
-    <header class="top-header">
-      <div class="header-title">
-        <span>🔮</span> <span class="gold-text">AI LUCKY HUB</span>
-      </div>
-      <div class="vip-badge">VIP GOLD</div>
-    </header>
+/* Negative member changes: shade the ENTIRE table row, not just difference cells. */
+.nm-table tbody tr.nm-negative-row > td{
+  background:#fff0f1!important;
+  border-top-color:#f6cdd3!important;
+  border-bottom-color:#f6cdd3!important;
+}
+.nm-table tbody tr.nm-negative-row > td:first-child{
+  box-shadow:inset 5px 0 0 #ef233c;
+  color:#9f2331;
+  font-weight:700;
+}
+.nm-table tbody tr.nm-negative-row > td.nm-negative-alert{
+  box-shadow:none!important;
+  background:#fff0f1!important;
+}
+.nm-table tbody tr.nm-negative-row input[readonly]{
+  background:#fff9fa!important;
+  border-color:#f4d4d9!important;
+}
+</style><style>
 
-    <!-- Dynamic Main View Container -->
-    <main id="main-content">
-      <!-- Content loaded via JS -->
-    </main>
+:root{--navy:#1f2937;--bg:#f4f7fb;--line:#e5ebf2;--ink:#18263b;--muted:#8291a7;--green:#059669;--red:#ef4444}*{box-sizing:border-box}body{margin:0;font-family:'Sarabun',Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,select{font:inherit}.side{position:fixed;inset:0 auto 0 0;width:235px;background:#1f2937;color:#c4cfdd;padding:20px 12px;z-index:10}.logo{color:#f24732;font-weight:700;font-size:25px;padding:2px 10px 22px}.nav{width:100%;display:flex;gap:12px;align-items:center;text-align:left;padding:13px;border:0;background:transparent;color:#bbc6d5;border-radius:11px;cursor:pointer;margin-bottom:6px}.nav.active,.nav:hover{background:#3c4758;color:white}.nav svg{width:20px;height:20px}.main{margin-left:235px;padding:25px 25px 45px;max-width:2100px}.heading{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}.heading .symbol{padding:12px;border-radius:11px;background:#e7efff;color:#4388ed}.heading h1{font-size:24px;margin:0}.heading p{margin:0;color:var(--muted);font-size:12px}.toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;background:white;border:1px solid var(--line);padding:16px;border-radius:15px;margin-bottom:18px}.field{display:flex;flex-direction:column;gap:5px;min-width:135px}.field label{font-size:12px;color:#66748a}.field input,.field select{height:39px;padding:8px;border:1px solid #d6dfe9;border-radius:8px;background:white;color:#27354b;max-width:185px}.field input:focus{outline:2px solid #bed3ff}.action{background:var(--navy);color:white;border:0;padding:10px 20px;border-radius:9px;cursor:pointer;min-height:39px}.action.secondary{background:#e9eef5;color:#1f2937}.mode{display:flex;gap:5px;background:#eef2f7;border-radius:9px;padding:4px}.mode button{border:0;border-radius:7px;padding:8px 12px;background:transparent;cursor:pointer;color:#58677a}.mode button.selected{background:#1f2937;color:white}.status{font-size:12px;color:#64748b;margin:4px 0 14px}.status{display:none!important}.status.error{display:block!important;color:#c72d42}.cards{display:flex;flex-direction:column;gap:12px}.cardrow{display:grid;gap:12px}.cardrow.four{grid-template-columns:repeat(4,minmax(0,1fr))}.cardrow.five{grid-template-columns:repeat(5,minmax(0,1fr))}.kcard{background:white;border:1px solid var(--line);border-radius:15px;box-shadow:0 5px 18px #1b315509;padding:14px;min-width:0}.khead{display:flex;align-items:center;gap:10px}.kicon{width:45px;height:45px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}.kicon svg{width:30px;height:30px}.kname{color:#7889a3;font-size:13px}.kvalue{font-size:22px;font-weight:700;line-height:1.2;overflow-wrap:anywhere}.change{margin-top:11px;text-align:center;padding:8px 4px;border-radius:9px;font-size:19px;font-weight:700}.change small{display:block;font-size:12px;font-weight:600;opacity:.78}.change.up{background:#e8f8f1;color:#07965c}.change.down{background:#fff0f1;color:#e33846}.change.same{background:#f1f4f8;color:#607086}.base{font-size:11px;color:#98a4b4;margin-top:8px}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:20px;box-shadow:0 5px 18px #1b315508}.panel h2{font-size:18px;margin:0 0 6px}.hint{color:#8390a2;font-size:12px}.charts{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:12px;margin-top:16px}.chartpanel{border:1px solid #e7ebf1;border-radius:12px;padding:12px;min-width:0}.chartpanel h3{font-size:14px;text-align:center;margin:0 0 14px}.chartbox{height:310px;position:relative}.chartbox canvas{width:100%!important;height:100%!important}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;white-space:nowrap}th,td{padding:11px;border-bottom:1px solid #edf0f4;text-align:right;font-size:13px}th:first-child,td:first-child{text-align:left}th{background:#f7f9fc;color:#62738a}.uptext{color:#059669;font-weight:700}.downtext{color:#e04452;font-weight:700}.savegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.savegrid input{width:100%;max-width:none}.hide{display:none!important}@media(max-width:1350px){.cardrow.five{grid-template-columns:repeat(3,minmax(0,1fr))}.charts{grid-template-columns:1fr}.chartbox{height:350px}}@media(max-width:1000px){.cardrow.four{grid-template-columns:repeat(2,minmax(0,1fr))}.savegrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.side{position:static;width:auto;display:flex;align-items:center;padding:8px;gap:5px}.logo{padding:0 10px}.nav{width:auto;margin:0;padding:10px;font-size:12px}.main{margin:0;padding:12px}.cardrow.five{grid-template-columns:repeat(2,minmax(0,1fr))}.kvalue{font-size:18px}.change{font-size:16px}.toolbar{padding:12px}.field{min-width:calc(50% - 8px)}.field input{width:100%}}
 
-    <!-- Disclaimer Footer -->
-    <footer class="disclaimer-footer">
-      ⚠️ แอปพลิเคชันนี้จัดทำขึ้นเพื่อความบันเทิงและการตัดสินใจเชิงสถิติส่วนบุคคลเท่านั้น ไม่สามารถรับประกันผลการออกรางวัลได้
-    </footer>
 
-    <!-- Fixed Bottom Navigation Bar -->
-    <nav class="bottom-nav">
-      <div class="nav-tab active" onclick="app.navigate('dashboard')">
-        <span class="nav-tab-icon">🏠</span>
-        <span>หน้าหลัก</span>
-      </div>
-      <div class="nav-tab" onclick="app.navigate('dream')">
-        <span class="nav-tab-icon">🌙</span>
-        <span>ทำนายฝัน</span>
-      </div>
-      <div class="nav-tab" onclick="app.navigate('generator')">
-        <span class="nav-tab-icon">🎲</span>
-        <span>สุ่มเลข</span>
-      </div>
-      <div class="nav-tab" onclick="app.navigate('chat')">
-        <span class="nav-tab-icon">💬</span>
-        <span>AI สนทนา</span>
-      </div>
-      <div class="nav-tab" onclick="app.navigate('profile')">
-        <span class="nav-tab-icon">👤</span>
-        <span>บัญชี</span>
-      </div>
-    </nav>
 
-  </div>
+/* Date comparison panels: clearly separated, responsive */
 
-  <!-- Main JavaScript Controller -->
-  <script src="js/app.js"></script>
-</body>
-</html>
+.compare-toolbar{display:block!important;padding:20px!important}
+
+.mode-area{margin-bottom:16px}.mode-area .field{min-width:0}
+
+.periods{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);align-items:center;gap:12px}
+
+.period-panel{border:2px solid;border-radius:16px;padding:18px;min-width:0}
+
+.period-blue{border-color:#a9c8fb;background:#f0f6ff}.period-red{border-color:#f4b3b9;background:#fff3f4}
+
+.period-heading{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+
+.period-heading strong{display:block;font-size:17px;color:#18263b}.period-heading small{display:block;font-size:11px;color:#738198;margin-top:2px}
+
+.period-number{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;color:#fff;font-size:17px;font-weight:700;flex-shrink:0}
+
+.period-blue .period-number{background:#3478e8}.period-red .period-number{background:#e34b60}
+
+.period-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+
+.period-inputs .field{min-width:0!important}.period-inputs .field input{width:100%!important;max-width:none!important;height:44px;background:#fff;font-weight:600}
+
+.period-blue .field input:focus{outline:2px solid #93bafa}.period-red .field input:focus{outline:2px solid #f1a1a9}
+
+.period-vs{font-size:13px;font-weight:700;color:#7d8aa1;text-align:center}
+
+.compare-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:16px;flex-wrap:wrap}
+
+.compare-note{color:#64748b;font-size:12px;flex:1}.compare-footer .action{min-width:180px}
+
+.period-inputs .hide{display:none!important}
+
+@media(max-width:1080px){.periods{grid-template-columns:1fr}.period-vs{padding:0}.period-panel{padding:14px}}
+
+@media(max-width:520px){.period-inputs{grid-template-columns:1fr}.compare-footer .action{width:100%}}
+
+
+
+/* Compact date comparison override */
+
+.compare-toolbar{padding:12px 14px!important}
+
+.mode-area{margin-bottom:9px!important}
+
+.mode-area .field{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+
+.mode-area .field>label{margin:0!important;font-size:12px}
+
+.periods{grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr)!important;gap:8px!important}
+
+.period-panel{padding:9px 11px!important;border-width:1px!important;border-radius:10px!important;background:#fff!important}
+
+.period-heading{margin-bottom:7px!important;gap:7px!important}
+
+.period-number{width:24px!important;height:24px!important;border-radius:6px!important;font-size:11px!important}
+
+.period-heading strong{font-size:13px!important}.period-heading small{display:none!important}
+
+.period-inputs{gap:8px!important}
+
+.period-inputs .field label{font-size:10px!important;margin-bottom:3px!important}
+
+.period-inputs .field input{height:34px!important;padding:4px 7px!important;font-size:12px!important}
+
+.period-vs{font-size:11px!important}
+
+.compare-footer{margin-top:8px!important;gap:8px!important}
+
+.compare-footer .action{min-width:135px!important;padding:8px 12px!important;font-size:12px!important}
+
+.compare-note{font-size:11px!important}
+
+@media(max-width:850px){.periods{grid-template-columns:1fr!important}.period-vs{display:none!important}}
+
+@media(max-width:520px){.period-inputs{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
+
+/* QA Compact KPI - single-screen desktop layout */
+@media(min-width:1101px){
+.main{padding:12px 16px 24px!important}.heading{padding-bottom:7px!important;margin-bottom:8px!important}.heading h1{font-size:19px!important}.heading .symbol{padding:7px!important}
+.compare-toolbar{padding:8px 11px!important;margin-bottom:7px!important}.mode-area{margin-bottom:5px!important}.mode button{padding:4px 10px!important;font-size:11px!important}.period-panel{padding:6px 9px!important}.period-heading{margin-bottom:4px!important}.period-number{height:19px!important;width:19px!important}.period-inputs .field input{height:29px!important}.compare-footer{margin-top:5px!important}.compare-footer .action{min-height:29px!important;padding:5px 10px!important}.status{margin:2px 0 6px!important;font-size:10px!important}
+.cards{gap:6px!important}.cardrow{gap:7px!important}.kcard{padding:7px 10px!important;border-radius:10px!important;min-height:72px!important}.khead{gap:7px!important}.kicon{width:29px!important;height:29px!important;border-radius:8px!important}.kicon svg{width:20px!important;height:20px!important}.kname{font-size:11px!important}.kvalue{font-size:16px!important;line-height:1.12!important}.change{margin-top:5px!important;padding:3px 7px!important;display:flex!important;justify-content:center;align-items:center;gap:10px;font-size:14px!important;min-height:24px!important}.change small{display:inline!important;font-size:11px!important}.base{font-size:10px!important;margin-top:3px!important}
+.panel{margin-top:9px!important;padding:10px 12px!important}.panel h2{font-size:15px!important;margin-bottom:2px!important}.hint{font-size:10px!important}.charts{margin-top:7px!important;gap:7px!important}.chartpanel{padding:5px!important}.chartpanel h3{font-size:11px!important;margin:0 0 3px!important}.chartbox{height:210px!important}
+}
+@media(min-width:1101px) and (max-width:1350px){.cardrow.five{grid-template-columns:repeat(5,minmax(0,1fr))!important}.charts{grid-template-columns:1fr 1fr 1.25fr!important}}
+@media(min-width:1101px) and (max-height:850px){.chartbox{height:175px!important}.heading{margin-bottom:5px!important}.kcard{padding:5px 9px!important}.panel{margin-top:6px!important}}
+
+/* Compact horizontal KPI cards */
+.cards{gap:7px!important}.cardrow{gap:8px!important}
+.kcard{padding:9px 11px!important;min-height:70px!important;display:flex;align-items:center;gap:8px;border-radius:11px!important}
+.khead{flex:1 1 45%;min-width:0;gap:7px!important}
+.khead>div:last-child{min-width:0}
+.kicon{width:30px!important;height:30px!important;flex-shrink:0}
+.kicon svg{width:21px!important;height:21px!important}
+.kname{font-size:11px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kvalue{font-size:17px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2!important}
+.kmetrics{flex:0 1 46%;min-width:0;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.change{margin:0!important;padding:4px 7px!important;min-height:0!important;display:flex!important;flex-direction:column!important;gap:0!important;align-items:flex-end!important;font-size:15px!important;line-height:1.15!important;width:100%;white-space:nowrap}
+.change small{display:block!important;font-size:11px!important;line-height:1.3!important}
+.base{margin:0!important;font-size:10px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:right}
+@media(max-width:1250px){.kcard{padding:8px!important}.kvalue{font-size:15px!important}.change{font-size:13px!important}.change small{font-size:10px!important}}
+@media(max-width:700px){.kcard{flex-wrap:wrap}.khead,.kmetrics{flex:1 1 100%}.kmetrics{align-items:stretch}.change{align-items:center!important}.base{text-align:center}}
+
+/* Minimal labels: retain the controls, chart legends, KPI values and alerts */
+.kmetrics{align-self:center!important}.kcard{min-height:0!important}
+.panel:has(.charts){padding-top:8px!important}
+.panel:has(.charts) .charts{margin-top:0!important}
+.compare-footer{justify-content:flex-end!important}
+
+/* Comparison mode relocated to the top-right of the page heading */
+.heading{display:flex!important;align-items:center!important;gap:12px!important}
+.heading>.mode-area{margin:0 0 0 auto!important;flex-shrink:0}
+.heading>.mode-area .field{display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;flex-wrap:nowrap!important}
+.heading>.mode-area .field>label{white-space:nowrap!important;font-size:12px!important;color:#75859d!important}
+.heading>.mode-area .mode{white-space:nowrap}
+@media(max-width:700px){.heading{flex-wrap:wrap!important}.heading>.mode-area{margin-left:auto!important}.heading>.mode-area .field>label{display:none!important}}
+
+/* Smaller date comparison strip */
+.compare-toolbar{padding:5px 8px!important;margin-bottom:5px!important;border-radius:9px!important}
+.periods{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 94px!important;gap:7px!important;align-items:end!important}
+.period-panel{padding:4px 7px!important;border-radius:7px!important}
+.period-heading{margin-bottom:2px!important;gap:5px!important}
+.period-number{height:16px!important;width:16px!important;font-size:9px!important}
+.period-heading strong{font-size:11px!important}
+.period-inputs{gap:5px!important}
+.period-inputs .field{gap:1px!important}
+.period-inputs .field label{font-size:9px!important;margin:0!important}
+.period-inputs .field input{height:25px!important;font-size:11px!important;padding:2px 5px!important;border-radius:5px!important}
+.compact-search{min-width:0!important;width:94px!important;height:29px!important;min-height:29px!important;padding:4px 5px!important;font-size:11px!important;white-space:nowrap!important}
+.period-vs,.compare-footer{display:none!important}
+@media(max-width:950px){.periods{grid-template-columns:1fr 1fr!important}.compact-search{grid-column:1/-1!important;justify-self:end!important}}
+@media(max-width:600px){.periods{grid-template-columns:1fr!important}.compact-search{grid-column:1!important}}
+
+/* One-screen layout: comparison controls aligned to far top-right */
+@media(min-width:1150px){
+.main{padding-top:10px!important}
+.heading{min-height:70px!important;padding:4px 0 8px!important;margin-bottom:7px!important;gap:9px!important}
+.heading .header-controls{margin-left:auto;display:flex;align-items:center;gap:8px;min-width:0}
+.heading .header-controls .mode-area{margin:0!important;flex-shrink:0}
+.heading .header-controls .mode-area .field>label{display:none!important}
+.heading .header-controls .compare-toolbar{background:transparent!important;border:0!important;padding:0!important;margin:0!important;box-shadow:none!important;width:auto!important}
+.heading .header-controls .periods{display:flex!important;align-items:center!important;gap:7px!important}
+.heading .header-controls .period-panel{width:clamp(200px,16vw,310px);padding:4px 6px!important}
+.heading .header-controls .period-heading{margin-bottom:2px!important}
+.heading .header-controls .period-heading small{display:none!important}
+.heading .header-controls .period-inputs .field label{display:none!important}
+.heading .header-controls .period-inputs .field input{height:26px!important;font-size:11px!important}
+.heading .header-controls .compact-search{align-self:center!important;height:29px!important}
+.charts{grid-template-columns:1fr 1fr 1.25fr!important}
+.chartbox{height:clamp(275px,33vh,360px)!important}
+.chartpanel{padding:8px!important}
+.chartpanel h3{font-size:12px!important;margin:0 0 4px!important}
+.panel:has(.charts){padding:8px!important;margin-top:8px!important}
+}
+@media(min-width:1150px) and (max-height:760px){.chartbox{height:265px!important}}
+@media(max-width:1149px){.heading .header-controls{display:contents}.heading .header-controls .compare-toolbar{display:none!important}.heading .header-controls .mode-area{margin-left:auto!important}}
+
+/* Expanded charts: fill the entire red-highlighted vertical area; table follows below. */
+@media (min-width:1101px){
+  .charts{grid-template-columns:1fr 1fr 1.25fr!important;align-items:stretch!important}
+  .chartpanel{min-height:0!important;display:flex!important;flex-direction:column!important;padding:8px!important}
+  .chartbox{height:clamp(480px,62vh,660px)!important;min-height:480px!important;flex:1!important}
+  .chartpanel h3{flex:none!important}
+  .panel:has(.charts){margin-bottom:8px!important}
+}
+@media (min-width:1101px) and (max-height:800px){.chartbox{height:clamp(390px,60vh,510px)!important;min-height:390px!important}}
+@media (max-width:1100px){.chartbox{height:340px!important}}
+
+/* Floating Bar — understated executive presentation */
+.chartpanel{background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%)!important;border:1px solid #e2eaf3!important;box-shadow:0 8px 24px rgba(25,44,75,.045)!important}
+.chartpanel h3{color:#243650!important;font-weight:700!important}
+
+/* Executive negative-change emphasis: presentation only; calculations unchanged */
+.detail-negative{background:#fff4f4!important;box-shadow:inset 4px 0 0 #d72d3b}
+.detail-negative:hover{background:#ffe9eb!important}
+.detail-negative td{border-bottom-color:#f7dadd}
+.kpi-alert-icon{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;margin-right:9px;border:2px solid #d72d3b;border-radius:50%;color:#c62031;background:#fff;font-size:14px;font-weight:800;vertical-align:middle;line-height:1}
+.kpi-negative-name{font-weight:700;color:#9f2331}
+.detail-trend{display:inline-flex;align-items:center;gap:5px;font-weight:700;white-space:nowrap;background:transparent;border:0;padding:0;border-radius:0}
+.detail-trend .trend-arrow{font-size:11px;line-height:1}
+.detail-trend.negative{color:#c51d32}
+.detail-trend.positive{color:#009d69}
+.detail-trend.neutral{color:#64748b}
+.detail-alert-summary{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:10px 0 12px;color:#8f2632;font-size:13px;font-weight:600}
+.detail-alert-summary .count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 7px;border-radius:999px;background:#c72b3b;color:#fff;font-weight:700}
+.detail-alert-summary.no-negative{color:#66748a}
+.detail-alert-summary.no-negative .count{background:#e9eef5;color:#66748a}
+@media(max-width:700px){.kpi-alert-icon{width:19px;height:19px;font-size:12px;margin-right:5px}.detail-trend{gap:3px}}
+
+/* Added AT betting view; original KPI styles retained */
+.at-page{padding-bottom:30px}.at-title{font-size:22px;font-weight:700;margin:8px 0 16px}.at-note{color:#66748a;font-size:12px;margin-bottom:15px}.at-month-head{background:#a70808;color:#fff;text-align:center;font-size:20px;font-weight:700;padding:8px;border-radius:7px;margin:16px 0 10px}.at-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:7px}.at-rank{border:1px solid #d8e1ec;border-top:3px solid var(--rank);border-radius:7px;overflow:hidden;background:#fff;min-width:0}.at-rank-head{background:var(--tint);border-bottom:1px solid #e2e8f0;text-align:center;font-weight:700;font-size:12px;padding:8px 3px}.at-rank-total{text-align:center;padding:9px 3px;font-weight:700;font-size:15px}.at-rank-row{display:flex;justify-content:space-between;gap:4px;border-top:1px solid #eef1f5;padding:7px 6px;font-size:11px}.at-rank-row span:last-child{font-weight:700;font-variant-numeric:tabular-nums}.at-rank-row.active span:first-child{color:#00864e}.at-rank-row.break span:first-child{color:#b87300}.at-rank-row.noactive span:first-child{color:#c3313b}.at-empty{color:#9aa6b7}.at-compare{background:#253b5b}.at-delta-pos{color:#059669!important}.at-delta-neg{color:#c9293d!important}.at-data-message{padding:12px;border:1px dashed #b8c5d7;border-radius:9px;background:#f7faff;color:#53647b;font-size:12px;margin:10px 0}.at-reload{margin:4px 0 12px}.at-summary-label{font-size:11px;color:#66748a}.at-rank-row .at-delta-pos,.at-rank-row .at-delta-neg{font-weight:700}@media(max-width:1500px){.at-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:850px){.at-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:450px){.at-grid{grid-template-columns:1fr 1fr}}
+/* Betting date control */
+.at-datebar{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:12px;padding:12px 14px;border:1px solid #dce5f0;border-radius:10px;background:#f7faff}
+.at-datebar .field{min-width:190px}.at-datebar input{max-width:none;width:190px}.at-datehelp{font-size:12px;color:#62738a}.at-month-head{background:#9e1118}
+
+/* ซ่อนข้อความอธิบายและข้อมูลตรวจสอบที่วงไว้ โดยไม่เปลี่ยนการคำนวณ */
+#atDateHelp, #bet .at-note, #atMessage, #atDiagnostics {display:none!important;}
+
+/* Betting: larger rank card typography and soft red warning for negative differences */
+.at-page .at-rank-head{font-size:14px;padding:11px 4px}
+.at-page .at-rank-total{font-size:19px;padding:12px 4px}
+.at-page .at-rank-row{font-size:13px;padding:10px 7px;align-items:center;min-height:38px}
+.at-page .at-month-head{font-size:21px;padding:10px}
+.at-page .at-rank-row.at-negative-row{background:#fff0f1;border-top:1px solid #f6d6db}
+.at-page .at-negative-row span:last-child{display:inline-flex;align-items:center;justify-content:flex-end;gap:3px;color:#c9293d!important}
+.at-page .at-warning-icon{width:15px;height:15px;flex:none;color:#df3346}
+@media(max-width:1250px){.at-page .at-rank-row{font-size:12px;padding:9px 5px}.at-page .at-rank-head{font-size:13px}.at-page .at-warning-icon{width:13px;height:13px}}
+
+/* Equal-height comparison rows, one-line labels, and viewport-fitting betting layout */
+#bet.at-page{padding-bottom:0}
+#bet .panel{margin-top:8px;padding:10px 12px 12px}
+#bet .at-title{font-size:17px;margin:0 0 5px}
+#bet .at-datebar{padding:7px 10px;margin-bottom:5px;min-height:54px;align-items:center}
+#bet .at-datebar .field{gap:2px}
+#bet .at-datebar input{height:34px}
+#bet .at-datebar .action{min-height:34px;padding:6px 13px}
+#bet .at-reload{margin:0 0 5px;padding:5px 12px;min-height:30px}
+#bet .at-month-head{margin:6px 0 5px;padding:5px 6px;font-size:17px}
+#bet .at-grid{gap:6px;grid-template-columns:repeat(8,minmax(0,1fr))}
+#bet .at-rank-head{padding:6px 2px;font-size:13px}
+#bet .at-rank-total{padding:6px 2px;font-size:16px}
+#bet .at-rank-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px;height:30px;min-height:30px;padding:4px 6px;font-size:12px;line-height:1.15}
+#bet .at-rank-row>span:first-child{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#bet .at-rank-row>span:last-child{min-width:0;white-space:nowrap;display:inline-flex;align-items:center;justify-content:flex-end;gap:3px}
+#bet .at-warning-icon{width:13px;height:13px}
+#bet .at-rank-row.at-negative-row{background:#fff0f1}
+@media(max-width:1250px){#bet .at-rank-row{font-size:11px;padding:4px 4px}#bet .at-rank-head{font-size:12px}}
+@media(max-width:760px){#bet .at-grid{grid-template-columns:repeat(4,minmax(0,1fr))}#bet .at-rank-row>span:first-child{font-size:10px}}
+</style><style>
+.nm-page .panel{padding:16px}.nm-heading{text-align:center;font-size:24px;margin:0 0 12px}.nm-toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:8px}.nm-toolbar label{font-size:12px;display:flex;flex-direction:column;gap:4px}.nm-toolbar input{padding:7px;border:1px solid #cbd5e1;border-radius:7px}.nm-layout{display:grid;grid-template-columns:minmax(480px,43%) minmax(0,57%);gap:10px}.nm-table-wrap{overflow:auto}.nm-table{width:100%;border-collapse:collapse;font-size:12px;background:white}.nm-table th,.nm-table td{border:1px solid #8a8a8a;padding:7px 5px;text-align:center}.nm-table th{background:#8b1e2d;color:white}.nm-table td:first-child{text-align:left;white-space:nowrap}.nm-table .nm-group td{background:#3a3a3a;color:white;font-weight:700}.nm-table input{width:90px;max-width:100%;padding:4px;border:1px solid #ddd;text-align:right;font:inherit}.nm-table .nm-neg{color:#c62828;font-weight:700}.nm-table .nm-pos{color:#188038;font-weight:700}.nm-charts{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:0}.nm-chart{min-width:0;background:#f4f4f4;border:1px solid #d4d4d4;padding:10px;position:relative;height:355px}.nm-chart h3{font-size:13px;text-align:center;margin:0 0 8px}.nm-chart canvas{max-width:100%;max-height:310px}@media(max-width:1200px){.nm-layout{grid-template-columns:1fr}.nm-charts{grid-template-columns:1fr 1fr}}@media(max-width:650px){.nm-charts{grid-template-columns:1fr}.nm-chart{height:290px}}
+
+/* New Members: match the KPI dashboard's premium chart styling */
+.nm-page .panel{background:#fff!important;border:1px solid #e2eaf3!important;border-radius:16px!important;padding:18px!important;box-shadow:0 8px 24px rgba(25,44,75,.045)!important}
+.nm-heading{font-size:19px!important;color:#243650!important;font-weight:700!important;margin-bottom:15px!important}
+.nm-toolbar{background:#f8fafc;border:1px solid #e7edf5;border-radius:12px;padding:12px;margin-bottom:14px;gap:12px}
+.nm-toolbar label{color:#62738a;font-weight:600}
+.nm-toolbar input{height:39px;border:1px solid #d6dfe9;border-radius:8px;background:white;color:#27354b}
+.nm-layout{grid-template-columns:minmax(480px,43%) minmax(0,57%);gap:14px;align-items:stretch}
+.nm-table-wrap{border:1px solid #e2eaf3;border-radius:12px;overflow:auto}
+.nm-table th,.nm-table td{border-color:#e7edf5;padding:9px 7px}
+.nm-table th{background:#1f2937;color:white;font-size:12px}
+.nm-table .nm-group td{background:#edf2f8;color:#243650;text-align:left;padding:11px;font-weight:700}
+.nm-table tr:nth-child(even):not(.nm-group) td{background:#fbfdff}
+.nm-table input{border:1px solid #dbe4ef;border-radius:6px;background:#fff;color:#243650;padding:6px}
+.nm-charts{gap:12px;align-items:stretch}
+.nm-chart{background:linear-gradient(180deg,#fff 0%,#fbfdff 100%)!important;border:1px solid #e2eaf3!important;box-shadow:0 8px 24px rgba(25,44,75,.045)!important;border-radius:12px!important;height:clamp(400px,54vh,590px)!important;padding:12px!important;display:flex;flex-direction:column;min-height:0}
+.nm-chart h3{font-size:13px!important;color:#243650!important;font-weight:700!important;margin:0 0 6px!important}
+.nm-chart canvas{width:100%!important;max-width:100%!important;height:100%!important;max-height:none!important;min-height:0}
+@media(max-width:1300px){.nm-layout{grid-template-columns:1fr}.nm-charts{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.nm-charts{grid-template-columns:1fr}.nm-chart{height:370px!important}.nm-page .panel{padding:10px!important}}
+</style><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/icon-192.png"><script>
+// Cloudflare Pages -> server-side Function -> Apps Script JSON endpoint.
+window.google={script:{run:new Proxy({}, {get(_t,key){if(key==='withSuccessHandler')return (success)=>makeCall(success,null);return undefined;}})}};
+function makeCall(success,failure){return new Proxy({}, {get(_t,key){if(key==='withFailureHandler')return (fn)=>makeCall(success,fn);if(key==='withSuccessHandler')return (fn)=>makeCall(fn,failure);return (...args)=>{fetch('/api/kpi',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:key,args})}).then(async r=>{const j=await r.json();if(!r.ok||!j.ok)throw Error(j.error||'API error');return j.result}).then(v=>success&&success(v)).catch(e=>{if(failure)failure(e);else console.error(e)});};}})}
+window.google.script.run=makeCall(null,null);
+</script></head><body><div id="authScreen" class="auth-screen"><div class="auth-box"><h2>QA KPI Dashboard</h2><p id="authIntro">เข้าสู่ระบบเพื่อดูข้อมูล</p><form id="authLoginForm" onsubmit="authLogin(event)"><label>Username</label><input id="authUsername" autocomplete="username" required><label>Password</label><input id="authPassword" type="password" autocomplete="current-password" required><button id="authLoginBtn" type="submit">ยืนยัน</button></form><form id="authOtpForm" class="hide" onsubmit="authConfirmOtp(event)"><label>รหัส Google Authenticator (6 หลัก)</label><input id="authOtp" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required><button id="authOtpBtn" type="submit">ยืนยันเข้าสู่ระบบ</button><button type="button" style="background:#e2e8f0;color:#1f2937" onclick="authBack()">ย้อนกลับ</button></form><p id="authError" class="auth-error"></p></div></div><div id="authLogoutDialog" class="auth-dialog hide"><div><h3>ยืนยันการออกจากระบบ?</h3><p>ต้องการออกจากระบบ KPI Dashboard ใช่หรือไม่</p><div style="display:flex;justify-content:flex-end;gap:8px"><button onclick="authCloseLogout()">ยกเลิก</button><button class="yes" onclick="authDoLogout()">ยืนยันออกจากระบบ</button></div></div></div><aside class="side"><div class="logo">QA</div><button class="nav active" id="nav-home" onclick="page('home')">▦ &nbsp; หน้าหลัก</button><button class="nav" id="nav-members" onclick="page('members')">♙ &nbsp; สมาชิกใหม่</button><button class="nav" id="nav-bet" onclick="page('bet')">▥ &nbsp; เดิมพัน</button><button class="nav" id="nav-save" onclick="page('save')">▤ &nbsp; บันทึกข้อมูล</button><button class="nav" onclick="load()">↻ &nbsp; รีเฟรชข้อมูล</button><button class="auth-logout" onclick="authOpenLogout()">⎋ &nbsp; ออกจากระบบ</button></aside><main class="main"><div class="heading"><div class="symbol">▦</div><div><h1 id="pagetitle">หน้าหลัก</h1></div><div class="mode-area"><div class="field"><label>รูปแบบการเปรียบเทียบ</label><div class="mode"><button id="daily" onclick="setMode('daily')">รายวัน</button><button id="range" class="selected" onclick="setMode('range')">ช่วงวันที่</button></div></div></div></div>
+
+<section id="home"><div class="toolbar compare-toolbar">
+
+
+
+<div class="periods">
+
+<div class="period-panel period-blue"><div class="period-heading"><span class="period-number">01</span><div><strong>A</strong><small>ข้อมูลฐานสำหรับเปรียบเทียบ</small></div></div><div class="period-inputs"><div class="field"><label for="a1">วันที่เริ่มต้น</label><input id="a1" type="date" value="2026-09-01"></div><div class="field rangeonly"><label for="a2">วันที่สิ้นสุด</label><input id="a2" type="date" value="2026-09-12"></div></div></div>
+
+
+
+<div class="period-panel period-red"><div class="period-heading"><span class="period-number">02</span><div><strong>B</strong><small>ข้อมูลที่นำมาเปรียบเทียบ</small></div></div><div class="period-inputs"><div class="field"><label for="b1">วันที่เริ่มต้น</label><input id="b1" type="date" value="2026-10-01"></div><div class="field rangeonly"><label for="b2">วันที่สิ้นสุด</label><input id="b2" type="date" value="2026-10-12"></div></div></div>
+
+<button class="action compact-search" onclick="render()">เปรียบเทียบ</button></div></div><div id="status" class="status">กำลังโหลดข้อมูลจาก Google Sheets...</div><div class="cards" id="cards"></div><section class="panel"><div class="charts"><div class="chartpanel"><h3>สมาชิกและกิจกรรม</h3><div class="chartbox"><canvas id="chart0"></canvas></div></div><div class="chartpanel"><h3>ยอดการเงิน</h3><div class="chartbox"><canvas id="chart1"></canvas></div></div><div class="chartpanel"><h3>โบนัสและแนะนำเพื่อน</h3><div class="chartbox"><canvas id="chart2"></canvas></div></div></div></section><section class="panel"><h2>รายละเอียดผลต่างและเปอร์เซ็นต์</h2><div id="negativeSummary" class="detail-alert-summary" aria-live="polite"></div><div class="tablewrap"><table><thead><tr><th>KPI</th><th>A</th><th>B</th><th>ส่วนต่าง</th><th>เปลี่ยนแปลง</th></tr></thead><tbody id="detail"></tbody></table></div></section></section>
+
+<section id="bet" class="hide at-page"><div class="panel"><h2 class="at-title">เจาะลูกค้าที่เรียลแอคทีฟ 2 เดือน แยก 8 แรงค์</h2><div class="at-datebar"><div class="field"><label for="atDate">วันที่อ้างอิง (เดือนนี้)</label><input id="atDate" type="date" value="2026-10-13" onchange="loadBet()"></div><div class="at-datehelp" id="atDateHelp">ACTIVE 5 วัน · BREAK 15 วัน · NOACTIVE ตั้งแต่ 20 วันขึ้นไป</div><button class="action" onclick="loadBet()">คำนวณข้อมูลเดิมพัน</button></div><div class="at-note">นับสมาชิกทุกครั้งที่พบชื่อแรงค์ในคอลัมน์ E (1 แถว = 1 สมาชิก) และแบ่งสถานะตามวันที่ฝากครั้งล่าสุดในคอลัมน์ F โดยไม่กรองคอลัมน์ B</div><div id="atMessage" class="at-data-message">กำลังตรวจสอบแท็บข้อมูลเดิมพัน…</div><div id="atDiagnostics" class="at-data-message" style="white-space:normal;font-size:11px"></div><button class="action secondary at-reload" onclick="loadBet()">↻ รีเฟรชข้อมูลเดิมพัน</button><div id="atMonthPrevious"></div><div id="atMonthCurrent"></div><div id="atMonthDifference"></div></div></section><section id="members" class="hide nm-page"><div class="panel"><h2 class="nm-heading">ภาพรวม 2 เดือน สมาชิกใหม่</h2><div class="nm-toolbar"><label>เดือนก่อน <input type="month" id="nmPrev" value="2026-09" disabled></label><label>เดือนปัจจุบัน <input type="month" id="nmCur" value="2026-10" disabled></label><button class="action" onclick="nmLoad()">ดึงข้อมูล</button></div><div id="nmStatus" class="status"></div><div class="nm-layout"><div class="nm-table-wrap"><table class="nm-table"><thead><tr><th>รายการ</th><th id="nmPrevHead">เดือนก่อน</th><th id="nmCurHead">เดือนปัจจุบัน</th><th>เพิ่ม/ลด</th><th>% เปลี่ยนแปลง</th></tr></thead><tbody id="nmRows"></tbody></table></div><div class="nm-charts"><div class="nm-chart"><h3>ภาพรวมสมาชิกใหม่</h3><canvas id="nmChartMain"></canvas></div><div class="nm-chart"><h3>สมาชิกฝาก 1–5 และรวม</h3><canvas id="nmChartDeposit"></canvas></div></div></div></div></section><section id="save" class="hide"><div class="panel"><h2>บันทึกหรือแก้ไขข้อมูลรายวัน</h2><p class="hint">เลือกวันที่ที่มีอยู่เพื่อแก้ไข หรือเลือกวันใหม่เพื่อเพิ่มข้อมูล โดยบันทึกลงแท็บ KPI_DAILY (หรือ ดาต้า)</p><div class="field"><label>วันที่บันทึก (ค.ศ.)</label><input type="date" id="saveDate" onchange="fillSave()"></div><div class="savegrid" id="savegrid"></div><p><button class="action" onclick="save()">บันทึกข้อมูลลง Google Sheets</button></p><div id="saveStatus" class="status"></div></div></section></main>
+
+
+<script>
+const AUTH_STORAGE_KEY='qa_kpi_session_v2';
+let authToken='',authChallenge='',authInitialized=false;
+function authShowLogin(message=''){document.getElementById('authScreen').classList.remove('hide');document.getElementById('authLoginForm').classList.remove('hide');document.getElementById('authOtpForm').classList.add('hide');document.getElementById('authIntro').textContent='เข้าสู่ระบบเพื่อดูข้อมูล';document.getElementById('authError').textContent=message;document.documentElement.classList.add('auth-ready');}
+function authBack(){authChallenge='';document.getElementById('authOtp').value='';authShowLogin();}
+function authReady(token){authToken=token;localStorage.setItem(AUTH_STORAGE_KEY,token);document.getElementById('authScreen').classList.add('hide');document.documentElement.classList.add('auth-ready');if(!authInitialized){authInitialized=true;setMode('range');load();}}
+function authLogin(e){e.preventDefault();const btn=document.getElementById('authLoginBtn');btn.disabled=true;document.getElementById('authError').textContent='กำลังตรวจสอบ...';google.script.run.withSuccessHandler(r=>{btn.disabled=false;authChallenge=r.challenge;document.getElementById('authPassword').value='';document.getElementById('authLoginForm').classList.add('hide');document.getElementById('authOtpForm').classList.remove('hide');document.getElementById('authIntro').textContent='ยืนยันตัวตนขั้นตอนที่ 2';document.getElementById('authError').textContent='';document.getElementById('authOtp').focus();}).withFailureHandler(err=>{btn.disabled=false;document.getElementById('authError').textContent=err.message||String(err);}).authBegin(document.getElementById('authUsername').value,document.getElementById('authPassword').value);}
+function authConfirmOtp(e){e.preventDefault();const btn=document.getElementById('authOtpBtn');btn.disabled=true;document.getElementById('authError').textContent='กำลังยืนยัน...';google.script.run.withSuccessHandler(r=>{btn.disabled=false;document.getElementById('authOtp').value='';authReady(r.token);}).withFailureHandler(err=>{btn.disabled=false;document.getElementById('authError').textContent=err.message||String(err);}).authFinish(authChallenge,document.getElementById('authOtp').value);}
+function authOpenLogout(){document.getElementById('authLogoutDialog').classList.remove('hide');}
+function authCloseLogout(){document.getElementById('authLogoutDialog').classList.add('hide');}
+function authDoLogout(){const old=authToken;authToken='';authInitialized=false;authChallenge='';localStorage.removeItem(AUTH_STORAGE_KEY);authCloseLogout();authShowLogin();google.script.run.withFailureHandler(()=>{}).authLogout(old);}
+(function authBoot(){let saved='';try{saved=localStorage.getItem(AUTH_STORAGE_KEY)||''}catch(e){}if(!saved){authShowLogin();return;}google.script.run.withSuccessHandler(()=>authReady(saved)).withFailureHandler(()=>{localStorage.removeItem(AUTH_STORAGE_KEY);authShowLogin();}).authPing(saved);})();
+</script>
+<script>
+
+const NAMES=['สมาชิกใหม่','ฝากครั้งแรก','คนที่เคลื่อนไหว','คนที่เดิมพัน','ฝาก','ถอน','ส่วนต่างฝากถอน','ชนะแพ้','โบนัสทั้งหมด','โบนัสมินิเกม','โบนัสโปรโมชั่น','แคชแบ็ก','แนะนำเพื่อน'];
+
+const COLORS=['#5498ff','#18cb89','#8d7cf7','#bd68f4','#29cd80','#ff6669','#13b978','#a67aff','#ffb313','#ae67f8','#f94eaa','#20ce91','#58a1fb'];
+
+const ICONS=[
+
+'<circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M4 22c0-7 16-7 16 0" fill="currentColor"/>',
+
+'<rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M2 10h20" stroke="currentColor" stroke-width="2.5"/>',
+
+'<circle cx="8" cy="7" r="4" fill="currentColor"/><circle cx="17" cy="10" r="4" fill="currentColor" opacity=".55"/><ellipse cx="8" cy="19" rx="8" ry="4" fill="currentColor"/><ellipse cx="18" cy="20" rx="5" ry="3" fill="currentColor" opacity=".5"/>',
+
+'<rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" fill="none" stroke-width="2.5"/><circle cx="8" cy="8" r="1.7" fill="currentColor"/><circle cx="16" cy="8" r="1.7" fill="currentColor"/><circle cx="12" cy="15" r="1.7" fill="currentColor"/>',
+
+'<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M12 5v13m-5-5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.5"/>',
+
+'<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M12 19V6m-5 5 5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.5"/>',
+
+'<rect x="3" y="13" width="4" height="8" fill="currentColor"/><rect x="10" y="5" width="4" height="16" fill="currentColor"/><rect x="17" y="9" width="4" height="12" fill="currentColor"/>',
+
+'<path d="M2 17l7-7 4 4 9-10" stroke="currentColor" stroke-width="2.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+
+'<rect x="3" y="9" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 9v13M3 13h18M12 9c-12-2-7-12 0-2 7-10 12 0 0 2" fill="none" stroke="currentColor" stroke-width="2"/>',
+
+'<path d="M7 7h10a5 5 0 0 1 5 5l1 6c.4 4-3 5-6 2l-3-3h-4l-3 3c-3 3-6 2-6-2l1-6a5 5 0 0 1 5-5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 12h6m-3-3v6" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="11" r="1.4" fill="currentColor"/><circle cx="19" cy="14" r="1.4" fill="currentColor"/>',
+
+'<path d="M12 2l3 3 4-1 1 4 3 4-3 3-1 4-4-1-3 3-3-3-4 1-1-4-3-3 3-4 1-4 4 1z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 16l8-8" stroke="currentColor" stroke-width="2.3"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/><circle cx="16" cy="16" r="1.3" fill="currentColor"/>',
+
+'<rect x="2" y="6" width="20" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 3h14" stroke="currentColor" stroke-width="2"/>',
+
+'<circle cx="9" cy="7" r="4" fill="currentColor"/><circle cx="18" cy="9" r="3" fill="currentColor" opacity=".7"/><path d="M1 21c0-9 16-9 16 0" fill="currentColor"/><path d="M15 16c5-3 9 0 9 5h-5" fill="currentColor" opacity=".7"/>'
+
+];
+
+const svg=i=>`<svg viewBox="0 0 24 24" aria-hidden="true" style="color:${COLORS[i]}">${ICONS[i]}</svg>`;
+
+let all=[],mode='range',charts=[];const $=id=>document.getElementById(id);const number=(n,dec=2)=>Number(n).toLocaleString('en-US',{maximumFractionDigits:dec});const dateLabel=s=>s.split('-').reverse().join('/');
+
+const THAI_MONTHS=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+function monthNameRange(start,end){
+  if(!start)return 'เลือกวันที่';
+  const [y,m]=start.split('-').map(Number);
+  if(!y||m<1||m>12)return 'เลือกวันที่';
+  const first=THAI_MONTHS[m-1]+' '+(y+543);
+  if(!end||end.slice(0,7)===start.slice(0,7))return first;
+  const [ey,em]=end.split('-').map(Number);
+  return first+' – '+THAI_MONTHS[em-1]+' '+(ey+543);
+}
+function updatePeriodNames(){
+  const a1=$('a1').value,b1=$('b1').value;
+  const a2=mode==='daily'?a1:$('a2').value;
+  const b2=mode==='daily'?b1:$('b2').value;
+  const labels=[monthNameRange(a1,a2),monthNameRange(b1,b2)];
+  document.querySelectorAll('.period-panel .period-heading strong').forEach((el,i)=>{el.textContent=labels[i]});
+  const th=$('detail').closest('table').querySelectorAll('thead th');
+  th[1].textContent=labels[0];th[2].textContent=labels[1];
+  return labels;
+}
+['a1','a2','b1','b2'].forEach(id=>$(id).addEventListener('change',()=>{updatePeriodNames();render()}));
+
+function page(p){
+  ['home','save','bet','members'].forEach(k=>{const el=$(k);if(el)el.classList.toggle('hide',p!==k);const nav=$('nav-'+k);if(nav)nav.classList.toggle('active',p===k)});
+  $('pagetitle').textContent=p==='home'?'หน้าหลัก':p==='save'?'บันทึกข้อมูล':p==='members'?'สมาชิกใหม่':'เดิมพัน';
+  const controls=document.querySelector('.header-controls');if(controls)controls.classList.toggle('hide',p!=='home');
+  const modeArea=document.querySelector('.heading>.mode-area');if(modeArea)modeArea.classList.toggle('hide',p!=='home');
+  if(p==='save')fillSave();if(p==='bet')loadBet();if(p==='members')nmLoad();
+}
+function setMode(m){mode=m;$('daily').classList.toggle('selected',m==='daily');$('range').classList.toggle('selected',m==='range');document.querySelectorAll('.rangeonly').forEach(x=>x.classList.toggle('hide',m==='daily'));render()}
+
+function aggregate(from,to){const found=all.filter(r=>r.date>=from&&r.date<=to);return {values:NAMES.map((_,i)=>found.reduce((s,r)=>s+(Number(r.values[i])||0),0)),count:found.length}}
+
+function status(t,err=false){$('status').textContent=t;$('status').classList.toggle('error',err)}
+
+function render(){const periodLabels=updatePeriodNames();const summary=$('rangeSummary');if(summary){const first=$('a1').value,second=$('b1').value;summary.textContent=`${periodLabels[0]} ⇄ ${periodLabels[1]}`;}if(!all.length){status('ไม่พบข้อมูลรายวัน กรุณาตรวจสอบแท็บ KPI_DAILY / ดาต้า และหัวตาราง');return}const a1=$('a1').value,a2=mode==='daily'?a1:$('a2').value,b1=$('b1').value,b2=mode==='daily'?b1:$('b2').value;if(!a1||!a2||!b1||!b2||a2<a1||b2<b1){status('กรุณาเลือกช่วงวันที่ให้ถูกต้อง',true);return}const A=aggregate(a1,a2),B=aggregate(b1,b2);status(`${periodLabels[0]}: ${A.count} วันที่มีข้อมูล | ${periodLabels[1]}: ${B.count} วันที่มีข้อมูล`);const rows=NAMES.map((name,i)=>{const x=A.values[i],y=B.values[i],diff=y-x,pct=x===0?null:diff/Math.abs(x)*100;return {name,i,x,y,diff,pct}});$('cards').innerHTML=[rows.slice(0,4),rows.slice(4,8),rows.slice(8,13)].map((group,g)=>`<div class="cardrow ${g===2?'five':'four'}">${group.map(r=>`<article class="kcard"><div class="khead"><div class="kicon" style="background:${COLORS[r.i]}16">${svg(r.i)}</div><div><div class="kname">${r.name}</div><div class="kvalue">${number(r.y)}</div></div></div><div class="kmetrics"><div class="change ${r.diff>0?'up':r.diff<0?'down':'same'}">${r.diff>0?'▲':r.diff<0?'▼':'–'} ${r.pct===null?'—':Math.abs(r.pct).toFixed(2)+'%'}<small>${r.diff>0?'+':''}${number(r.diff)}</small></div></div></article>`).join('')}</div>`).join('');const negativeCount=rows.filter(r=>r.diff<0).length;
+$('negativeSummary').className='detail-alert-summary'+(negativeCount?'':' no-negative');
+$('negativeSummary').innerHTML=`<span class="count">${negativeCount}</span><span>${negativeCount?'รายการ KPI ที่มีผลต่างติดลบ (เทียบกับช่วงก่อนหน้า)':'ไม่พบรายการ KPI ที่มีผลต่างติดลบ'}</span>`;
+$('detail').innerHTML=rows.map(r=>{const trend=r.diff<0?'negative':r.diff>0?'positive':'neutral';const arrow=r.diff<0?'▼':r.diff>0?'▲':'';const diffText=(r.diff>0?'+':'')+number(r.diff);const pctText=r.pct===null?'—':(r.pct>0?'+':'')+r.pct.toFixed(2)+'%';const mark=(value)=>`<span class="detail-trend ${trend}">${arrow?`<span class="trend-arrow">${arrow}</span>`:''}<span>${value}</span></span>`;return `<tr class="${r.diff<0?'detail-negative':''}"><td>${r.diff<0?'<span class="kpi-alert-icon" title="ผลต่างติดลบ" aria-label="ผลต่างติดลบ">!</span>':''}<span class="${r.diff<0?'kpi-negative-name':''}">${r.name}</span></td><td>${number(r.x)}</td><td>${number(r.y)}</td><td class="${r.diff>0?'uptext':r.diff<0?'downtext':''}">${mark(diffText)}</td><td class="${r.diff>0?'uptext':r.diff<0?'downtext':''}">${mark(pctText)}</td></tr>`}).join('');drawCharts(rows,periodLabels)}
+
+function drawCharts(rows,periodLabels){
+  charts.forEach(c=>c.destroy()); charts=[];
+  if(typeof Chart==='undefined'){status('โหลด Chart.js ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต',true);return;}
+  if(typeof ChartDataLabels!=='undefined'&&!Chart.registry.plugins.get('datalabels')) Chart.register(ChartDataLabels);
+  const floatingShadow={id:'floatingShadow',beforeDatasetsDraw(chart){
+    const {ctx}=chart;ctx.save();ctx.shadowColor='rgba(25,45,75,.18)';ctx.shadowBlur=13;ctx.shadowOffsetY=6;
+    chart.data.datasets.forEach((ds,i)=>{const meta=chart.getDatasetMeta(i);meta.data.forEach(el=>{if(!el||el.skip)return;const props=el.getProps(['x','y','base','width'],true);const left=props.x-props.width/2,top=Math.min(props.y,props.base),height=Math.abs(props.base-props.y);if(height<1)return;ctx.fillStyle='rgba(60,80,110,.10)';ctx.beginPath();ctx.roundRect(left,top,props.width,height,[5,5,1,1]);ctx.fill();});});ctx.restore();
+  }};
+  [[0,1,2,3],[4,5,6,7],[8,9,10,11,12]].forEach((indices,g)=>{
+    const sub=indices.map(i=>rows[i]);
+    const fill=(c,top,bottom)=>{const {chart}=c,area=chart.chartArea;if(!area)return top;const gradient=chart.ctx.createLinearGradient(0,area.top,0,area.bottom);gradient.addColorStop(0,top);gradient.addColorStop(1,bottom);return gradient;};
+    charts.push(new Chart($('chart'+g),{
+      type:'bar',plugins:[floatingShadow],
+      data:{labels:sub.map(r=>r.name),datasets:[
+        {label:periodLabels[0],data:sub.map(r=>r.x),backgroundColor:c=>fill(c,'#7CB5FF','#2563C7'),hoverBackgroundColor:'#3D86ED',borderColor:'#316CC6',borderWidth:0,borderRadius:{topLeft:6,topRight:6},borderSkipped:'bottom',maxBarThickness:34,categoryPercentage:.72,barPercentage:.83},
+        {label:periodLabels[1],data:sub.map(r=>r.y),backgroundColor:c=>fill(c,'#FF9296','#CE3948'),hoverBackgroundColor:'#EB5B67',borderColor:'#CC4251',borderWidth:0,borderRadius:{topLeft:6,topRight:6},borderSkipped:'bottom',maxBarThickness:34,categoryPercentage:.72,barPercentage:.83}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,animation:{duration:550},layout:{padding:{top:34,right:10,left:4,bottom:3}},
+        plugins:{legend:{position:'top',labels:{font:{family:'Sarabun',size:12,weight:'600'},boxWidth:13,boxHeight:10,useBorderRadius:true,borderRadius:3,padding:15}},
+          tooltip:{backgroundColor:'#17263E',titleFont:{family:'Sarabun',size:12},bodyFont:{family:'Sarabun',size:12},padding:11,callbacks:{label:c=>c.dataset.label+': '+number(c.raw)}},
+          datalabels:{anchor:'end',align:'end',rotation:g===0?0:-28,offset:3,clamp:true,clip:false,formatter:v=>number(v,g===0?0:2),font:{family:'Sarabun',size:g===0?11:10,weight:'bold'},color:c=>c.datasetIndex===0?'#2259A7':'#B82E41'}},
+        scales:{x:{ticks:{color:'#53667F',font:{family:'Sarabun',size:11},maxRotation:25,minRotation:0},grid:{display:false},border:{display:false}},
+          y:{beginAtZero:true,grace:'22%',ticks:{color:'#91A0B2',font:{family:'Sarabun',size:10},callback:v=>v>=1e6?(v/1e6).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v},grid:{color:'rgba(130,150,180,.13)',drawTicks:false},border:{display:false}}}
+      }
+    }));
+  });
+}
+
+
+// Betting module is additive. Never infer a cell layout from the screenshot.
+const AT_RANKS=[['NEWBIE','#b8b2b0','#f2f1f1'],['BRONZE','#aeb3bb','#f0f1f4'],['SILVER','#b5c5d8','#edf3f9'],['GOLD','#edb547','#fff5da'],['PLATINUM','#8c9bae','#edf1f6'],['EMERALD','#00644b','#e8f7f0'],['DIAMOND','#00648a','#e8f5fb'],['RUBY','#b91018','#fff0f0']];
+let atLoading=false;let atRequestId=0;
+function atEscape(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function atRankCard(rank,entry,kind){
+ const [name,color,tint]=rank;
+ const val=(k)=>entry&&entry[k]!==null&&entry[k]!==undefined&&Number.isFinite(Number(entry[k]))?Number(entry[k]):null;
+ const fmt=(n)=>n===null?'—':number(n,2);
+ const trend=(n)=>n===null?'at-empty':n<0?'at-delta-neg':n>0?'at-delta-pos':'';
+ const arrow=(n)=>n===null?'':n<0?'▼ ':n>0?'▲ ':'';
+ const alertIcon='<svg class="at-warning-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></svg>'; 
+ const rows=kind==='difference'?[['ACTIVE',val('active')],['อัตราการเติบโต',val('growth')],['จำนวนลูกค้าที่เพิ่ม/ลด',val('total')]]:[['ACTIVE',val('active')],['BREAK',val('break')],['NOACTIVE',val('noactive')]];
+ return `<article class="at-rank" style="--rank:${color};--tint:${tint}"><div class="at-rank-head">${name}</div>${kind==='difference'?'':`<div class="at-rank-total">${fmt(val('total'))}</div>`}${rows.map(([label,v],i)=>`<div class="at-rank-row ${kind==='difference'?(v!==null&&v<0?'at-negative-row':'at-difference-row'):label.toLowerCase()}"><span title="${atEscape(label)}">${kind==='difference'&&label==='จำนวนลูกค้าที่เพิ่ม/ลด'?'ลูกค้าเพิ่ม/ลด':label}</span><span class="${kind==='difference'?trend(v):''}">${kind==='difference'&&v!==null&&v<0?alertIcon:''}${kind==='difference'?arrow(v):''}${v===null?'—':label==='อัตราการเติบโต'?fmt(v)+'%':fmt(v)}</span></div>`).join('')}</article>`;
+}
+function atSection(id,title,data,kind){$(id).innerHTML=`<div class="at-month-head ${kind==='difference'?'at-compare':''}">${atEscape(title)}</div><div class="at-grid">${AT_RANKS.map(rank=>atRankCard(rank,data?.[rank[0]],kind)).join('')}</div>`;}
+function atThaiMonth(iso){const [y,m]=iso.split('-').map(Number);return THAI_MONTHS[m-1]+' '+(y+543)}
+function atPreviousMonth(iso){const [y,m,d]=iso.split('-').map(Number);const prev=new Date(Date.UTC(y,m-2,1));const last=new Date(Date.UTC(prev.getUTCFullYear(),prev.getUTCMonth()+1,0)).getUTCDate();return `${prev.getUTCFullYear()}-${String(prev.getUTCMonth()+1).padStart(2,'0')}-${String(Math.min(d,last)).padStart(2,'0')}`}
+function atSigned(n){return n>0?'▲ ':n<0?'▼ ':''}
+function atDifference(prev,current){const result={};AT_RANKS.forEach(([rank])=>{const p=prev[rank]||{active:0,total:0},c=current[rank]||{active:0,total:0};result[rank]={active:c.active-p.active,growth:p.active===0?(c.active===0?0:null):(c.active-p.active)/p.active*100,total:c.total-p.total};});return result;}
+function loadBet(){
+ const requestId=++atRequestId;
+ const iso=$('atDate').value;if(!iso){$('atMessage').textContent='กรุณาเลือกวันที่';return;}
+ const prevDate=atPreviousMonth(iso),currentLabel=atThaiMonth(iso),previousLabel=atThaiMonth(prevDate);
+ $('atDateHelp').textContent=`${previousLabel}: ${prevDate.split('-').reverse().join('/')} | ${currentLabel}: ${iso.split('-').reverse().join('/')} · ACTIVE 0–4 วัน · BREAK 5–19 วัน · NOACTIVE 20 วันขึ้นไป`;
+ atSection('atMonthPrevious',previousLabel+' — ATเดือนที่แล้ว',null,'month');
+ atSection('atMonthCurrent',currentLabel+' — ATเดือนนี้',null,'month');
+ atSection('atMonthDifference','ส่วนต่าง NEWBIE – RUBY',null,'difference');
+ $('atMessage').textContent='กำลังคำนวณสถานะจาก Google Sheets…';
+ if(typeof google==='undefined'||!google.script?.run){$('atMessage').textContent='กรุณาเปิดผ่าน Google Apps Script Web App เพื่ออ่านข้อมูลจริง';return;}
+ google.script.run.withSuccessHandler(res=>{
+  if(requestId!==atRequestId)return;
+  const prev=res.previous,current=res.current;
+  atSection('atMonthPrevious',previousLabel+' — ATเดือนที่แล้ว',prev.ranks,'month');
+  atSection('atMonthCurrent',currentLabel+' — ATเดือนนี้',current.ranks,'month');
+  atSection('atMonthDifference','ส่วนต่าง NEWBIE – RUBY',atDifference(prev.ranks,current.ranks),'difference');
+  $('atMessage').textContent=`${previousLabel}: ${number(prev.included,0)} สมาชิก · ${currentLabel}: ${number(current.included,0)} สมาชิก (ไม่กรองคอลัมน์ B)`+` · F วันที่จริง ${number(prev.parsedDate+current.parsedDate,0)} · N/A ${number(prev.naCount+current.naCount,0)} · F อ่านไม่ได้ ${number(prev.invalidDate+current.invalidDate,0)} · F หลังวันที่เลือก ${number(prev.futureDate+current.futureDate,0)}`;
+  const diag=$('atDiagnostics');if(diag){const ex=[...prev.examples.map(x=>({...x,sheet:'ATเดือนที่แล้ว'})),...current.examples.map(x=>({...x,sheet:'ATเดือนนี้'}))];diag.textContent=ex.length?'ตัวอย่างข้อมูลคอลัมน์ F ที่ระบบยังจัดสถานะไม่ได้: '+ex.slice(0,8).map(x=>`${x.sheet} แถว ${x.row} [${x.rank}]: ${x.display||x.raw||'(ว่าง)'} (${x.reason})`).join(' | '):'';}
+ }).withFailureHandler(err=>{if(requestId!==atRequestId)return;$('atMessage').textContent='โหลดข้อมูลเดิมพันไม่สำเร็จ: '+(err?.message||err)}).getBetRankData(authToken,iso);
+}
+
+function fillSave(){const day=$('saveDate').value;const found=all.find(r=>r.date===day);$('savegrid').innerHTML=NAMES.map((name,i)=>`<div class="field"><label>${name}</label><input id="v${i}" type="number" step="any" value="${found?found.values[i]:0}"></div>`).join('')}
+
+function save(){const date=$('saveDate').value;if(!date){$('saveStatus').textContent='กรุณาเลือกวันที่';return}const values=NAMES.map((_,i)=>Number($('v'+i).value)||0);$('saveStatus').textContent='กำลังบันทึก...';google.script.run.withSuccessHandler(msg=>{$('saveStatus').textContent=msg;load()}).withFailureHandler(err=>{$('saveStatus').textContent='ผิดพลาด: '+err.message}).saveDay(authToken,{date,values})}
+
+function load(){status('กำลังอ่านข้อมูลจาก Google Sheets...');if(typeof google==='undefined'||!google.script||!google.script.run){status('โปรดเปิดหน้าเว็บผ่าน Google Apps Script Web App เพื่อเชื่อม Google Sheets',true);return}google.script.run.withSuccessHandler(rows=>{all=rows||[];if(all.length){const last=all[all.length-1].date;if(!$('saveDate').value)$('saveDate').value=last;render()}else status('ไม่มีข้อมูลในชีต กรุณาตรวจสอบหัวตารางและวันที่',true)}).withFailureHandler(e=>status('โหลดข้อมูลไม่สำเร็จ: '+e.message,true)).readAll(authToken)}
+
+// Initial dashboard load is deferred until the session is authenticated.
+
+</script><script>
+(function(){
+const heading=document.querySelector('.heading');
+const mode=document.querySelector('.heading>.mode-area');
+const toolbar=document.querySelector('#home>.compare-toolbar');
+const home=document.getElementById('home');
+const holder=document.createElement('div');holder.className='header-controls';
+heading.appendChild(holder);
+function layout(){
+ if(window.innerWidth>=1150){holder.appendChild(mode);holder.appendChild(toolbar)}
+ else {heading.insertBefore(mode,holder);home.insertBefore(toolbar,home.firstChild)}
+}
+layout();window.addEventListener('resize',layout);
+})();
+</script>
+<script>
+(function(){
+  let pending=false;
+  function fitBet(){
+    pending=false;
+    const section=document.getElementById('bet');
+    if(!section||section.classList.contains('hide'))return;
+    const panel=section.querySelector('.panel');
+    if(!panel)return;
+    panel.style.zoom='1';
+    const top=panel.getBoundingClientRect().top;
+    const available=Math.max(200,window.innerHeight-top-12);
+    const natural=panel.getBoundingClientRect().height;
+    const factor=Math.min(1,available/Math.max(1,natural));
+    // Keep readability on very small displays; allow scroll only when truly necessary.
+    panel.style.zoom=String(Math.max(.65,factor));
+  }
+  function schedule(){if(pending)return;pending=true;requestAnimationFrame(fitBet)}
+  window.addEventListener('resize',schedule);
+  const bet=document.getElementById('bet');
+  if(bet){new MutationObserver(schedule).observe(bet,{attributes:true,attributeFilter:['class']});
+    ['atMonthPrevious','atMonthCurrent','atMonthDifference'].forEach(id=>{
+      const node=document.getElementById(id);
+      if(node)new MutationObserver(schedule).observe(node,{childList:true,subtree:true});
+    });
+  }
+  schedule();
+})();
+</script>
+<script>
+const NM_NAMES=['สมาชิกใหม่ทั้งหมด','สมาชิกใหม่ที่ฝากเงิน','สมาชิกใหม่ที่ยังไม่ฝาก','% สมาชิกใหม่ → ฝาก','สมาชิกฝาก 1','สมาชิกฝาก 2','สมาชิกฝาก 3','สมาชิกฝาก 4','สมาชิกฝากภายใน 5 ขึ้นไป'];
+let nmCharts=[],nmData=null;
+function nmMonthLabel(v){const [y,m]=v.split('-').map(Number);return new Date(y,m-1,1).toLocaleDateString('th-TH',{month:'long',year:'numeric'});}
+function nmNum(v){return Number(v||0).toLocaleString('en-US',{maximumFractionDigits:2});}
+function nmReadInputs(){return NM_NAMES.map((_,i)=>[0,1].map(j=>Number(document.getElementById('nm_'+i+'_'+j)?.value||0)));}
+function nmRender(data){nmData=data;document.getElementById('nmPrevHead').textContent=nmMonthLabel(data.previous);document.getElementById('nmCurHead').textContent=nmMonthLabel(data.current);let body='';NM_NAMES.forEach((name,i)=>{if(i===4)body+='<tr class="nm-group"><td colspan="5">จำนวนสมาชิกใหม่ที่ฝากเงินแต่ละครั้ง</td></tr>';const a=Number(data.a[i]||0),b=Number(data.b[i]||0),delta=b-a,pct=a===0?(b===0?'–':'ใหม่'):((delta/a)*100).toFixed(2)+'%';const fmt=i===3?v=>nmNum(v)+'%':nmNum;body+='<tr><td>'+name+'</td><td><input id="nm_'+i+'_0" type="number" min="0" step="any" value="'+a+'" readonly ></td><td><input id="nm_'+i+'_1" type="number" min="0" step="any" value="'+b+'" readonly ></td><td class="'+(delta<0?'nm-neg':'nm-pos')+'">'+(delta>0?'+':'')+fmt(delta)+'</td><td class="'+(delta<0?'nm-neg':'nm-pos')+'">'+pct+'</td></tr>'});document.getElementById('nmRows').innerHTML=body;nmUpdate();}
+function nmUpdate(){
+ if(!nmData)return;
+ const values=nmReadInputs();
+ for(let j=0;j<2;j++){
+  values[2][j]=Math.max(0,values[0][j]-values[1][j]);
+  values[3][j]=values[0][j]?+(100*values[1][j]/values[0][j]).toFixed(2):0;
+  document.getElementById('nm_2_'+j).value=values[2][j];
+  document.getElementById('nm_3_'+j).value=values[3][j];
+ }
+ NM_NAMES.forEach((_,i)=>{
+  const row=document.getElementById('nm_'+i+'_0').closest('tr');
+  const delta=values[i][1]-values[i][0];
+  const pct=values[i][0]===0?(values[i][1]===0?'–':'ใหม่'):(delta/values[i][0]*100).toFixed(2)+'%';
+  const negative=delta<0;
+  const icon=negative?'<span class="nm-alert-icon" aria-hidden="true">!</span>':'';
+  row.cells[3].innerHTML=icon+'<span>'+(delta>0?'+':'')+nmNum(delta)+(i===3?'%':'')+'</span>';
+  row.cells[4].innerHTML=icon+'<span>'+pct+'</span>';
+  row.classList.toggle('nm-negative-row',negative);
+  row.cells[3].className=row.cells[4].className=negative?'nm-neg nm-negative-alert':'nm-pos';
+ });
+ nmCharts.forEach(c=>c.destroy());nmCharts=[];
+ if(typeof Chart==='undefined')return;
+ if(typeof ChartDataLabels!=='undefined'&&!Chart.registry.plugins.get('datalabels'))Chart.register(ChartDataLabels);
+ const labels=[nmMonthLabel(nmData.previous),nmMonthLabel(nmData.current)];
+ const numberLabel=v=>Number(v).toLocaleString('en-US',{maximumFractionDigits:0});
+ const gradient=(context,top,bottom)=>{
+  const area=context.chart.chartArea;
+  if(!area)return top;
+  const g=context.chart.ctx.createLinearGradient(0,area.top,0,area.bottom);
+  g.addColorStop(0,top);g.addColorStop(1,bottom);return g;
+ };
+ [[0,1,2],[4,5,6,7,8]].forEach((ids,k)=>{
+  const ctx=document.getElementById(k?'nmChartDeposit':'nmChartMain');
+  nmCharts.push(new Chart(ctx,{
+   type:'bar',
+   data:{labels:ids.map(i=>NM_NAMES[i]),datasets:labels.map((label,j)=>({
+    label,data:ids.map(i=>values[i][j]),
+    backgroundColor:c=>j===0?gradient(c,'#7CB5FF','#2563C7'):gradient(c,'#FF9296','#CE3948'),
+    hoverBackgroundColor:j===0?'#3D86ED':'#EB5B67',
+    borderWidth:0,borderRadius:{topLeft:6,topRight:6},borderSkipped:'bottom',
+    maxBarThickness:38,categoryPercentage:.72,barPercentage:.82
+   }))},
+   options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},
+    layout:{padding:{top:28,right:7,left:3,bottom:5}},
+    plugins:{
+     legend:{position:'top',labels:{font:{family:'Sarabun',size:11,weight:'600'},color:'#53667F',boxWidth:13,boxHeight:10,useBorderRadius:true,borderRadius:3,padding:13}},
+     tooltip:{backgroundColor:'#17263E',padding:10,callbacks:{label:c=>c.dataset.label+': '+numberLabel(c.raw)}},
+     datalabels:{display:c=>Number(c.dataset.data[c.dataIndex])!==0,anchor:'end',align:'end',offset:3,clamp:true,clip:false,
+      formatter:v=>numberLabel(v),font:{family:'Sarabun',size:10,weight:'bold'},color:c=>c.datasetIndex===0?'#2259A7':'#B82E41'}
+    },
+    scales:{x:{ticks:{color:'#53667F',font:{family:'Sarabun',size:10},maxRotation:28,minRotation:15},grid:{display:false},border:{display:false}},
+     y:{beginAtZero:true,grace:'20%',ticks:{color:'#91A0B2',font:{family:'Sarabun',size:10},precision:0,callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v},grid:{color:'rgba(130,150,180,.13)',drawTicks:false},border:{display:false}}}
+   }
+  }));
+ });
+}
+function nmLoad(){const prev=document.getElementById('nmPrev').value,cur=document.getElementById('nmCur').value;if(!prev||!cur)return;document.getElementById('nmStatus').textContent='กำลังอ่านข้อมูล...';google.script.run.withSuccessHandler(r=>{nmRender(r);document.getElementById('nmStatus').textContent='ดึงข้อมูลจาก Google Sheets สำเร็จ ('+r.previousTab+' / '+r.currentTab+')'+((r.invalidPrevious||r.invalidCurrent||r.emptyPrevious||r.emptyCurrent)?' — มีแถวที่คอลัมน์ D ไม่ถูกต้องหรือว่าง กรุณาตรวจสอบชีต':'');}).withFailureHandler(e=>document.getElementById('nmStatus').textContent='ผิดพลาด: '+e.message).getNewMemberReport(authToken,prev,cur);}
+</script></body></html>
