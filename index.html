@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="th"><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QA KPI Dashboard</title><link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script><style>html:not(.auth-ready) body{visibility:hidden!important} .auth-screen{position:fixed;inset:0;z-index:9999;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:18px}.auth-box{width:min(420px,100%);padding:30px;border-radius:18px;background:white;box-shadow:0 18px 65px #18263b22}.auth-box h2{margin:0 0 6px;font-size:24px;color:#1f2937}.auth-box p{font-size:13px;color:#64748b}.auth-box label{display:block;margin:14px 0 5px;color:#475569;font-size:13px}.auth-box input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px}.auth-box button{width:100%;padding:12px;margin-top:17px;background:#1f2937;color:white;border:0;border-radius:9px;cursor:pointer}.auth-box button:disabled{opacity:.5}.auth-error{color:#dc2626!important;min-height:18px}.auth-logout{position:absolute;bottom:18px;left:12px;width:calc(100% - 24px);border:1px solid #64748b;background:transparent;color:white;padding:12px;border-radius:10px;cursor:pointer}.auth-dialog{position:fixed;inset:0;z-index:10000;background:#0f172a88;display:flex;align-items:center;justify-content:center}.auth-dialog>div{background:white;padding:25px;border-radius:14px;max-width:350px;width:90%}.auth-dialog button{padding:10px 16px;border-radius:8px;border:0;cursor:pointer}.auth-dialog .yes{background:#b91c1c;color:white}@media(max-width:700px){.auth-logout{position:static;width:auto;white-space:nowrap;padding:9px}} 
+<!DOCTYPE html><html lang="th"><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QA KPI Dashboard</title><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png"><meta name="theme-color" content="#8b1e2d"><link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script><style>html:not(.auth-ready) body{visibility:hidden!important} .auth-screen{position:fixed;inset:0;z-index:9999;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:18px}.auth-box{width:min(420px,100%);padding:30px;border-radius:18px;background:white;box-shadow:0 18px 65px #18263b22}.auth-box h2{margin:0 0 6px;font-size:24px;color:#1f2937}.auth-box p{font-size:13px;color:#64748b}.auth-box label{display:block;margin:14px 0 5px;color:#475569;font-size:13px}.auth-box input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px}.auth-box button{width:100%;padding:12px;margin-top:17px;background:#1f2937;color:white;border:0;border-radius:9px;cursor:pointer}.auth-box button:disabled{opacity:.5}.auth-error{color:#dc2626!important;min-height:18px}.auth-logout{position:absolute;bottom:18px;left:12px;width:calc(100% - 24px);border:1px solid #64748b;background:transparent;color:white;padding:12px;border-radius:10px;cursor:pointer}.auth-dialog{position:fixed;inset:0;z-index:10000;background:#0f172a88;display:flex;align-items:center;justify-content:center}.auth-dialog>div{background:white;padding:25px;border-radius:14px;max-width:350px;width:90%}.auth-dialog button{padding:10px 16px;border-radius:8px;border:0;cursor:pointer}.auth-dialog .yes{background:#b91c1c;color:white}@media(max-width:700px){.auth-logout{position:static;width:auto;white-space:nowrap;padding:9px}} 
 /* New members: negative values appear as a red alert strip with an exclamation icon. */
 .nm-table td.nm-negative-alert{
   background:#fff0f1!important;
@@ -293,12 +293,170 @@
 .nm-chart canvas{width:100%!important;max-width:100%!important;height:100%!important;max-height:none!important;min-height:0}
 @media(max-width:1300px){.nm-layout{grid-template-columns:1fr}.nm-charts{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.nm-charts{grid-template-columns:1fr}.nm-chart{height:370px!important}.nm-page .panel{padding:10px!important}}
-</style><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png"><script>
-// Cloudflare Pages -> server-side Function -> Apps Script JSON endpoint.
-window.google={script:{run:new Proxy({}, {get(_t,key){if(key==='withSuccessHandler')return (success)=>makeCall(success,null);return undefined;}})}};
-function makeCall(success,failure){return new Proxy({}, {get(_t,key){if(key==='withFailureHandler')return (fn)=>makeCall(success,fn);if(key==='withSuccessHandler')return (fn)=>makeCall(fn,failure);return (...args)=>{fetch('/api/kpi',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:key,args})}).then(async r=>{const j=await r.json();if(!r.ok||!j.ok)throw Error(j.error||'API error');return j.result}).then(v=>success&&success(v)).catch(e=>{if(failure)failure(e);else console.error(e)});};}})}
-window.google.script.run=makeCall(null,null);
-</script></head><body><div id="authScreen" class="auth-screen"><div class="auth-box"><h2>QA KPI Dashboard</h2><p id="authIntro">เข้าสู่ระบบเพื่อดูข้อมูล</p><form id="authLoginForm" onsubmit="authLogin(event)"><label>Username</label><input id="authUsername" autocomplete="username" required><label>Password</label><input id="authPassword" type="password" autocomplete="current-password" required><button id="authLoginBtn" type="submit">ยืนยัน</button></form><form id="authOtpForm" class="hide" onsubmit="authConfirmOtp(event)"><label>รหัส Google Authenticator (6 หลัก)</label><input id="authOtp" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required><button id="authOtpBtn" type="submit">ยืนยันเข้าสู่ระบบ</button><button type="button" style="background:#e2e8f0;color:#1f2937" onclick="authBack()">ย้อนกลับ</button></form><p id="authError" class="auth-error"></p></div></div><div id="authLogoutDialog" class="auth-dialog hide"><div><h3>ยืนยันการออกจากระบบ?</h3><p>ต้องการออกจากระบบ KPI Dashboard ใช่หรือไม่</p><div style="display:flex;justify-content:flex-end;gap:8px"><button onclick="authCloseLogout()">ยกเลิก</button><button class="yes" onclick="authDoLogout()">ยืนยันออกจากระบบ</button></div></div></div><aside class="side"><div class="logo">QA</div><button class="nav active" id="nav-home" onclick="page('home')">▦ &nbsp; หน้าหลัก</button><button class="nav" id="nav-members" onclick="page('members')">♙ &nbsp; สมาชิกใหม่</button><button class="nav" id="nav-bet" onclick="page('bet')">▥ &nbsp; เดิมพัน</button><button class="nav" id="nav-save" onclick="page('save')">▤ &nbsp; บันทึกข้อมูล</button><button class="nav" onclick="load()">↻ &nbsp; รีเฟรชข้อมูล</button><button class="auth-logout" onclick="authOpenLogout()">⎋ &nbsp; ออกจากระบบ</button></aside><main class="main"><div class="heading"><div class="symbol">▦</div><div><h1 id="pagetitle">หน้าหลัก</h1></div><div class="mode-area"><div class="field"><label>รูปแบบการเปรียบเทียบ</label><div class="mode"><button id="daily" onclick="setMode('daily')">รายวัน</button><button id="range" class="selected" onclick="setMode('range')">ช่วงวันที่</button></div></div></div></div>
+</style><style>
+/* MOBILE-ONLY RESPONSIVE LAYOUT: desktop remains unchanged */
+
+/* MOBILE V3: single consistent layout; desktop unaffected */
+@media (max-width:767px){
+ html{width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+ body{width:100%;min-width:0;overflow-x:hidden;margin:0;padding:0;font-size:13px}
+ .side{position:fixed!important;inset:auto 0 0 0!important;z-index:1100!important;
+   display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+   width:100%!important;height:calc(62px + env(safe-area-inset-bottom))!important;
+   padding:5px 4px calc(5px + env(safe-area-inset-bottom))!important;
+   gap:3px!important;background:#1f2937!important;box-shadow:0 -2px 12px #0003!important;
+   border-top:1px solid #3c4758!important;overflow:visible!important}
+ .side .logo{display:none!important}
+ .side .nav{width:100%!important;height:50px!important;min-width:0!important;
+   padding:4px 1px!important;margin:0!important;display:flex!important;
+   align-items:center!important;justify-content:center!important;text-align:center!important;
+   white-space:normal!important;line-height:1.15!important;font-size:11px!important;
+   border-radius:8px!important;color:#c4cfdd!important;background:transparent!important}
+ .side .nav.active{background:#3c4758!important;color:white!important}
+ .side .nav:nth-last-of-type(2){display:none!important}
+ .side .auth-logout{position:fixed!important;top:calc(8px + env(safe-area-inset-top))!important;
+   right:10px!important;bottom:auto!important;left:auto!important;
+   width:auto!important;min-width:96px!important;height:35px!important;
+   display:flex!important;align-items:center!important;justify-content:center!important;
+   padding:5px 9px!important;background:#1f2937!important;color:#fff!important;
+   border:1px solid #ef4444!important;border-radius:9px!important;
+   font-size:12px!important;font-weight:700!important;z-index:1200!important}
+ .main{position:relative!important;margin:0!important;padding:calc(8px + env(safe-area-inset-top)) 8px calc(82px + env(safe-area-inset-bottom))!important;
+   width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:hidden!important}
+ .main>*{min-width:0!important;max-width:100%!important}
+ .heading{min-height:42px!important;padding:4px 106px 8px 0!important;margin:0 0 8px!important;
+   gap:5px!important;flex-wrap:wrap!important}
+ .heading h1{font-size:17px!important;line-height:1.25!important}
+ .heading .symbol{padding:7px!important}
+ .heading .mode-area{width:100%!important;margin:0!important}
+ .toolbar{padding:8px!important;gap:7px!important}
+ .field{min-width:0!important;flex:1 1 42%!important}
+ .field input,.field select{width:100%!important;min-width:0!important;max-width:100%!important;font-size:16px!important}
+ .action{min-height:40px!important}
+ .cardrow.four,.cardrow.five{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ .kcard{min-width:0!important;padding:8px!important}
+ .kvalue{font-size:17px!important}
+ .change{font-size:12px!important}
+ .charts,.nm-charts{grid-template-columns:minmax(0,1fr)!important;gap:10px!important}
+ .chartbox{height:245px!important;min-height:0!important}
+ .chartpanel{min-width:0!important}
+ .periods{grid-template-columns:minmax(0,1fr)!important}
+ .period-inputs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .period-vs{display:none!important}
+ #members,.nm-page,.nm-layout,.nm-table-wrap,.nm-charts{min-width:0!important;max-width:100%!important;width:100%!important}
+ .nm-page .panel{padding:8px!important}
+ .nm-heading{font-size:16px!important}
+ .nm-toolbar{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ .nm-toolbar label{min-width:0!important}
+ .nm-toolbar input{width:100%!important;max-width:100%!important;font-size:16px!important}
+ .nm-toolbar button{grid-column:1/-1!important;width:100%!important}
+ .nm-layout{display:flex!important;flex-direction:column!important;gap:10px!important}
+ .nm-table-wrap{overflow-x:hidden!important;overflow-y:visible!important}
+ #members .nm-table{table-layout:fixed!important;width:100%!important;min-width:0!important;
+   max-width:100%!important;border-collapse:collapse!important;white-space:normal!important;font-size:9px!important}
+ #members .nm-table th,#members .nm-table td{min-width:0!important;max-width:0!important;
+   padding:5px 2px!important;text-align:center!important;white-space:normal!important;
+   overflow-wrap:anywhere!important;word-break:normal!important;line-height:1.2!important}
+ #members .nm-table th:first-child,#members .nm-table td:first-child{width:34%!important;text-align:left!important;padding-left:4px!important}
+ #members .nm-table th:nth-child(2),#members .nm-table td:nth-child(2),
+ #members .nm-table th:nth-child(3),#members .nm-table td:nth-child(3){width:17%!important}
+ #members .nm-table th:nth-child(4),#members .nm-table td:nth-child(4){width:15%!important}
+ #members .nm-table th:nth-child(5),#members .nm-table td:nth-child(5){width:17%!important}
+ #members .nm-table input{box-sizing:border-box!important;width:100%!important;min-width:0!important;
+   max-width:100%!important;padding:4px 1px!important;font-size:10px!important;text-align:center!important}
+ #members .nm-table .nm-alert-icon,#members .nm-table .nm-warning-icon{display:none!important}
+ #members .nm-table .nm-neg,#members .nm-table .nm-pos{font-size:9px!important}
+ .nm-chart{width:100%!important;min-width:0!important;height:290px!important}
+ .nm-chart canvas{max-width:100%!important}
+ #bet .at-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ #bet .at-rank{min-width:0!important}
+ #bet .at-rank-row{white-space:normal!important;font-size:10px!important}
+ .savegrid{grid-template-columns:minmax(0,1fr)!important}
+ .auth-box{width:min(420px,100%)!important;max-height:calc(100dvh - 24px)!important;overflow-y:auto!important}
+ .auth-screen{padding:12px!important}
+ .auth-dialog>div{max-width:calc(100vw - 28px)!important}
+}
+@media(max-width:375px){
+ #members .nm-table{font-size:8px!important}
+ #members .nm-table input{font-size:9px!important}
+ .side .nav{font-size:10px!important}
+}
+
+/* KPI detail table: five columns fit on narrow phones */
+@media screen and (max-width:767px){
+ #home .tablewrap{width:100%!important;max-width:100%!important;overflow-x:hidden!important;overflow-y:visible!important;border-radius:8px}
+ #home .tablewrap table{width:100%!important;min-width:0!important;max-width:100%!important;table-layout:fixed!important;white-space:normal!important;border-collapse:collapse!important}
+ #home .tablewrap th,#home .tablewrap td{min-width:0!important;max-width:none!important;overflow:hidden!important;overflow-wrap:anywhere!important;word-break:normal!important;white-space:normal!important;font-size:clamp(8px,2.05vw,10px)!important;line-height:1.2!important;padding:7px 2px!important;vertical-align:middle!important;text-align:center!important;font-variant-numeric:tabular-nums}
+ #home .tablewrap th:nth-child(1),#home .tablewrap td:nth-child(1){width:24%!important;text-align:left!important;padding-left:5px!important}
+ #home .tablewrap th:nth-child(2),#home .tablewrap td:nth-child(2){width:19%!important}
+ #home .tablewrap th:nth-child(3),#home .tablewrap td:nth-child(3){width:19%!important}
+ #home .tablewrap th:nth-child(4),#home .tablewrap td:nth-child(4){width:22%!important}
+ #home .tablewrap th:nth-child(5),#home .tablewrap td:nth-child(5){width:16%!important}
+ #home .tablewrap .detail-trend{display:inline-flex!important;max-width:100%!important;min-width:0!important;gap:1px!important;white-space:normal!important;overflow-wrap:anywhere!important;align-items:center!important;justify-content:center!important;font-size:inherit!important}
+ #home .tablewrap .detail-trend .trend-arrow{font-size:8px!important;flex-shrink:0}
+ #home .tablewrap .kpi-alert-icon{width:12px!important;height:12px!important;min-width:12px!important;font-size:8px!important;margin-right:2px!important}
+ #home .tablewrap .detail-negative{box-shadow:inset 3px 0 0 #d72d3b!important}
+ #home .panel:has(.tablewrap){padding:8px 5px!important}
+ #home .panel:has(.tablewrap)>h2{font-size:15px!important}
+ #home .detail-alert-summary{font-size:11px!important;gap:5px!important}
+}
+
+/* Mobile alignment pass V4: scoped to phones only */
+@media screen and (max-width:767px){
+ :root{--mobile-gap:10px}
+ .main{padding-left:10px!important;padding-right:10px!important}
+ .heading{display:grid!important;grid-template-columns:32px minmax(0,1fr) 106px!important;align-items:center!important;gap:7px!important;min-height:46px!important;padding:4px 0 10px!important}
+ .heading .symbol{grid-column:1!important;grid-row:1!important;display:grid!important;place-items:center!important;width:32px!important;height:32px!important;padding:0!important}
+ .heading>div:nth-child(2){grid-column:2!important;grid-row:1!important;min-width:0!important}
+ .heading h1{font-size:17px!important;white-space:nowrap!important}
+ .heading>.mode-area,.heading>.header-controls{grid-column:1/-1!important;grid-row:2!important;width:100%!important;margin:0!important;display:block!important}
+ .heading .header-controls .mode-area{margin:0!important}
+ .heading .mode{width:max-content!important;max-width:100%!important}
+ .heading .mode button{font-size:12px!important;padding:8px 12px!important}
+ .side .auth-logout{top:calc(12px + env(safe-area-inset-top))!important;right:10px!important;height:33px!important;min-width:100px!important}
+ #home .compare-toolbar{display:block!important;width:100%!important;max-width:100%!important;padding:10px!important;margin:0 0 10px!important}
+ #home .periods{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;align-items:stretch!important;width:100%!important}
+ #home .period-panel{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;padding:10px!important;border-width:1px!important;border-radius:12px!important}
+ #home .period-heading{display:flex!important;align-items:center!important;gap:8px!important;margin:0 0 9px!important;min-height:24px!important}
+ #home .period-heading strong{font-size:13px!important;line-height:1.2!important}
+ #home .period-heading small{display:none!important}
+ #home .period-number{width:24px!important;height:24px!important;min-width:24px!important;font-size:11px!important;border-radius:7px!important}
+ #home .period-inputs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;align-items:end!important;width:100%!important}
+ #home .period-inputs .field{display:flex!important;flex-direction:column!important;min-width:0!important;width:100%!important;flex:none!important;gap:4px!important;margin:0!important}
+ #home .period-inputs .field label{display:block!important;font-size:10px!important;line-height:1.25!important;min-height:13px!important;color:#6b7890!important;margin:0!important}
+ #home .period-inputs .field input{display:block!important;box-sizing:border-box!important;width:100%!important;min-width:0!important;max-width:100%!important;height:38px!important;padding:5px 4px!important;font-size:12px!important;text-align:center!important;border:1px solid #d4dfed!important;border-radius:7px!important}
+ #home .period-inputs .field.hide,#home .period-inputs .field.rangeonly.hide{display:none!important}
+ #home .compact-search{grid-column:1/-1!important;justify-self:stretch!important;width:100%!important;min-width:0!important;height:42px!important;margin:0!important;padding:9px!important;border-radius:9px!important}
+ #home .cardrow{gap:9px!important;align-items:stretch!important}
+ #home .kcard{display:flex!important;flex-direction:column!important;justify-content:space-between!important;min-width:0!important;min-height:135px!important;padding:10px!important;border-radius:13px!important}
+ #home .khead{display:flex!important;align-items:center!important;gap:7px!important;min-height:58px!important;width:100%!important}
+ #home .kicon{width:33px!important;height:33px!important;min-width:33px!important;border-radius:9px!important}
+ #home .kicon svg{width:23px!important;height:23px!important}
+ #home .kmetrics{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;min-width:0!important;width:100%!important}
+ #home .kname{font-size:11px!important;line-height:1.25!important}
+ #home .kvalue{font-size:clamp(14px,4vw,18px)!important;line-height:1.3!important;overflow-wrap:anywhere!important}
+ #home .change{margin-top:8px!important;min-height:42px!important;padding:6px 3px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;font-size:13px!important;line-height:1.15!important}
+ #home .change small{font-size:10px!important;margin-top:3px!important}
+ #home .panel{margin-top:10px!important;padding:10px!important}
+ #home .chartpanel{padding:9px!important}
+ #members .nm-toolbar{align-items:end!important}
+ #members .nm-layout{align-items:stretch!important}
+ #bet .at-datebar{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important}
+ #bet .at-datebar .field,#bet .at-datebar input,#bet .at-datebar button{width:100%!important;max-width:100%!important;min-width:0!important}
+ #save .panel .field{width:100%!important;max-width:100%!important}
+ #save .panel input{max-width:100%!important}
+}
+@media screen and (max-width:360px){
+ #home .period-inputs .field input{font-size:11px!important;padding:4px 2px!important}
+ #home .kcard{padding:7px!important}
+ #home .kvalue{font-size:14px!important}
+}
+
+/* Custom navigation icons from user reference images */
+.side .nav .nav-custom-icon{display:inline-block;width:19px;height:19px;flex:0 0 19px;vertical-align:middle;color:inherit;stroke:currentColor}
+.side .nav .nav-text{vertical-align:middle}
+@media(max-width:767px){.side .nav .nav-custom-icon{display:block;margin:0 auto 3px;width:20px;height:20px;flex:0 0 20px}.side .nav .nav-text{display:block;font-size:10px;line-height:1.15}.side .nav{flex-direction:column!important;gap:1px!important}}
+</style></head><body><div id="authScreen" class="auth-screen"><div class="auth-box"><h2>QA KPI Dashboard</h2><p id="authIntro">เข้าสู่ระบบเพื่อดูข้อมูล</p><form id="authLoginForm" onsubmit="authLogin(event)"><label>Username</label><input id="authUsername" autocomplete="username" required><label>Password</label><input id="authPassword" type="password" autocomplete="current-password" required><button id="authLoginBtn" type="submit">ยืนยัน</button></form><form id="authOtpForm" class="hide" onsubmit="authConfirmOtp(event)"><label>รหัส Google Authenticator (6 หลัก)</label><input id="authOtp" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required><button id="authOtpBtn" type="submit">ยืนยันเข้าสู่ระบบ</button><button type="button" style="background:#e2e8f0;color:#1f2937" onclick="authBack()">ย้อนกลับ</button></form><p id="authError" class="auth-error"></p></div></div><div id="authLogoutDialog" class="auth-dialog hide"><div><h3>ยืนยันการออกจากระบบ?</h3><p>ต้องการออกจากระบบ KPI Dashboard ใช่หรือไม่</p><div style="display:flex;justify-content:flex-end;gap:8px"><button onclick="authCloseLogout()">ยกเลิก</button><button class="yes" onclick="authDoLogout()">ยืนยันออกจากระบบ</button></div></div></div><aside class="side"><div class="logo">QA</div><button class="nav active" id="nav-home" onclick="page('home')"><svg class="nav-custom-icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="14" y="3.5" width="6.5" height="6.5" rx="1"/><rect x="3.5" y="14" width="6.5" height="6.5" rx="1"/><rect x="14" y="14" width="6.5" height="6.5" rx="1"/></svg> <span class="nav-text">หน้าหลัก</span></button><button class="nav" id="nav-members" onclick="page('members')"><svg class="nav-custom-icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19v-1.4c0-3 2.5-5 5.5-5s5.5 2 5.5 5V19"/><path d="M16 5.2a3 3 0 0 1 0 5.7M17 13.1c2.3.5 3.5 2.1 3.5 4.5V19"/></svg> <span class="nav-text">สมาชิกใหม่</span></button><button class="nav" id="nav-bet" onclick="page('bet')"><svg class="nav-custom-icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.5c-1.2 0-2 1-2 2.1v1.6H5.3a2.3 2.3 0 0 0 0 4.6H7v2.4H5.6a2.4 2.4 0 0 0 0 4.8H10v-2.2a2 2 0 1 1 4 0V19h4.4a2.4 2.4 0 0 0 0-4.8H17v-2.4h1.7a2.3 2.3 0 0 0 0-4.6H17V5.6c0-1.1-.8-2.1-2-2.1-1.1 0-1.9.8-1.9 2V7H11V5.5c0-1.2-.9-2-2-2Z"/></svg> <span class="nav-text">เดิมพัน</span></button><button class="nav" id="nav-save" onclick="page('save')">▤ &nbsp; บันทึกข้อมูล</button><button class="nav" onclick="load()">↻ &nbsp; รีเฟรชข้อมูล</button><button class="auth-logout" onclick="authOpenLogout()">⎋ &nbsp; ออกจากระบบ</button></aside><main class="main"><div class="heading"><div class="symbol">▦</div><div><h1 id="pagetitle">หน้าหลัก</h1></div><div class="mode-area"><div class="field"><label>รูปแบบการเปรียบเทียบ</label><div class="mode"><button id="daily" onclick="setMode('daily')">รายวัน</button><button id="range" class="selected" onclick="setMode('range')">ช่วงวันที่</button></div></div></div></div>
 
 <section id="home"><div class="toolbar compare-toolbar">
 
@@ -317,6 +475,14 @@ window.google.script.run=makeCall(null,null);
 <section id="bet" class="hide at-page"><div class="panel"><h2 class="at-title">เจาะลูกค้าที่เรียลแอคทีฟ 2 เดือน แยก 8 แรงค์</h2><div class="at-datebar"><div class="field"><label for="atDate">วันที่อ้างอิง (เดือนนี้)</label><input id="atDate" type="date" value="2026-10-13" onchange="loadBet()"></div><div class="at-datehelp" id="atDateHelp">ACTIVE 5 วัน · BREAK 15 วัน · NOACTIVE ตั้งแต่ 20 วันขึ้นไป</div><button class="action" onclick="loadBet()">คำนวณข้อมูลเดิมพัน</button></div><div class="at-note">นับสมาชิกทุกครั้งที่พบชื่อแรงค์ในคอลัมน์ E (1 แถว = 1 สมาชิก) และแบ่งสถานะตามวันที่ฝากครั้งล่าสุดในคอลัมน์ F โดยไม่กรองคอลัมน์ B</div><div id="atMessage" class="at-data-message">กำลังตรวจสอบแท็บข้อมูลเดิมพัน…</div><div id="atDiagnostics" class="at-data-message" style="white-space:normal;font-size:11px"></div><button class="action secondary at-reload" onclick="loadBet()">↻ รีเฟรชข้อมูลเดิมพัน</button><div id="atMonthPrevious"></div><div id="atMonthCurrent"></div><div id="atMonthDifference"></div></div></section><section id="members" class="hide nm-page"><div class="panel"><h2 class="nm-heading">ภาพรวม 2 เดือน สมาชิกใหม่</h2><div class="nm-toolbar"><label>เดือนก่อน <input type="month" id="nmPrev" value="2026-09" disabled></label><label>เดือนปัจจุบัน <input type="month" id="nmCur" value="2026-10" disabled></label><button class="action" onclick="nmLoad()">ดึงข้อมูล</button></div><div id="nmStatus" class="status"></div><div class="nm-layout"><div class="nm-table-wrap"><table class="nm-table"><thead><tr><th>รายการ</th><th id="nmPrevHead">เดือนก่อน</th><th id="nmCurHead">เดือนปัจจุบัน</th><th>เพิ่ม/ลด</th><th>% เปลี่ยนแปลง</th></tr></thead><tbody id="nmRows"></tbody></table></div><div class="nm-charts"><div class="nm-chart"><h3>ภาพรวมสมาชิกใหม่</h3><canvas id="nmChartMain"></canvas></div><div class="nm-chart"><h3>สมาชิกฝาก 1–5 และรวม</h3><canvas id="nmChartDeposit"></canvas></div></div></div></div></section><section id="save" class="hide"><div class="panel"><h2>บันทึกหรือแก้ไขข้อมูลรายวัน</h2><p class="hint">เลือกวันที่ที่มีอยู่เพื่อแก้ไข หรือเลือกวันใหม่เพื่อเพิ่มข้อมูล โดยบันทึกลงแท็บ KPI_DAILY (หรือ ดาต้า)</p><div class="field"><label>วันที่บันทึก (ค.ศ.)</label><input type="date" id="saveDate" onchange="fillSave()"></div><div class="savegrid" id="savegrid"></div><p><button class="action" onclick="save()">บันทึกข้อมูลลง Google Sheets</button></p><div id="saveStatus" class="status"></div></div></section></main>
 
 
+<script>
+// Cloudflare adapter for the existing Google Apps Script client calls.
+(function(){
+ const api=(method,args)=>fetch('/api/kpi',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,args})}).then(async r=>{let data;try{data=await r.json()}catch(e){throw Error('API ไม่ส่ง JSON (HTTP '+r.status+')')}if(!r.ok||!data.ok)throw Error(data.error||'API error '+r.status);return data.result;});
+ function runner(success,failure){return new Proxy({withSuccessHandler(fn){return runner(fn,failure)},withFailureHandler(fn){return runner(success,fn)}},{get(target,prop){if(prop in target)return target[prop];if(prop==='then')return undefined;return (...args)=>{api(String(prop),args).then(v=>success&&success(v)).catch(e=>{if(failure)failure(e);else console.error('KPI API:',e.message)});};}})}
+ window.google={script:{run:runner(null,null)}};
+})();
+</script>
 <script>
 const AUTH_STORAGE_KEY='qa_kpi_session_v2';
 let authToken='',authChallenge='',authInitialized=false;
