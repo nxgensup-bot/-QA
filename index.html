@@ -293,7 +293,7 @@
 .nm-chart canvas{width:100%!important;max-width:100%!important;height:100%!important;max-height:none!important;min-height:0}
 @media(max-width:1300px){.nm-layout{grid-template-columns:1fr}.nm-charts{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.nm-charts{grid-template-columns:1fr}.nm-chart{height:370px!important}.nm-page .panel{padding:10px!important}}
-</style><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/icon-192.png"><script>
+</style><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png"><script>
 // Cloudflare Pages -> server-side Function -> Apps Script JSON endpoint.
 window.google={script:{run:new Proxy({}, {get(_t,key){if(key==='withSuccessHandler')return (success)=>makeCall(success,null);return undefined;}})}};
 function makeCall(success,failure){return new Proxy({}, {get(_t,key){if(key==='withFailureHandler')return (fn)=>makeCall(success,fn);if(key==='withSuccessHandler')return (fn)=>makeCall(fn,failure);return (...args)=>{fetch('/api/kpi',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method:key,args})}).then(async r=>{const j=await r.json();if(!r.ok||!j.ok)throw Error(j.error||'API error');return j.result}).then(v=>success&&success(v)).catch(e=>{if(failure)failure(e);else console.error(e)});};}})}
